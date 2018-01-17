@@ -10,7 +10,9 @@ import Foundation
 import CoreData
 
 public final class DataRaft {
-    private var storeCoordinator: NSPersistentStoreCoordinator?
+    private var storeCoordinator: NSPersistentStoreCoordinator!
+    private var mainContext: NSManagedObjectContext!
+    private var isConfigured = false
     
     public init() {}
     
@@ -41,8 +43,10 @@ public final class DataRaft {
             options[NSInferMappingModelAutomaticallyOption] = true
         }
         
-        self.storeCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
-        try self.storeCoordinator?.addPersistentStore(ofType: type.rawValue, configurationName: nil, at: storeUrl, options: options)
+        storeCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
+        try storeCoordinator.addPersistentStore(ofType: type.rawValue, configurationName: nil, at: storeUrl, options: options)
+        
+        isConfigured = true
     }
     
     /// This function configure CoreData stack asynchronously.
@@ -63,5 +67,34 @@ public final class DataRaft {
                 DispatchQueue.main.async { completion?(error) }
             }
         }
+    }
+    
+    /// Return the main context for cirrent stack.
+    ///
+    /// - Returns: The instance of NSManagedObjectContext.
+    public func main() -> NSManagedObjectContext {
+        guard isConfigured else {
+            fatalError("DataRaft is not configured.")
+        }
+        
+        if mainContext == nil {
+            mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+            mainContext.persistentStoreCoordinator = storeCoordinator
+        }
+        
+        return mainContext!
+    }
+    
+    /// Creates and return the new private context for current stack.
+    ///
+    /// - Returns: The instance of NSManagedObjectContext.
+    public func `private`() -> NSManagedObjectContext {
+        guard isConfigured else {
+            fatalError("DataRaft is not configured.")
+        }
+        
+        let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        privateContext.parent = main()
+        return privateContext
     }
 }

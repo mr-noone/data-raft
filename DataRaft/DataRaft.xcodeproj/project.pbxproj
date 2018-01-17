@@ -15,7 +15,7 @@
 		1DCE941D200E14930009C19A /* DataRaftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE941C200E14930009C19A /* DataRaftTests.swift */; };
 		1DCE9420200E15DA0009C19A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE941E200E15DA0009C19A /* Model.xcdatamodeld */; };
 		1DCE9422200E33D30009C19A /* DataRaftError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE9421200E33D30009C19A /* DataRaftError.swift */; };
-		1DCE942C200E4FC70009C19A /* XCTestCase+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE942B200E4FC70009C19A /* XCTestCase+Helpers.swift */; };
+		1DCE942C200E4FC70009C19A /* XCTestCase+Expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE942B200E4FC70009C19A /* XCTestCase+Expectation.swift */; };
 		1DCE9430200F45DC0009C19A /* URL+StoreHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE942F200F45DC0009C19A /* URL+StoreHelpers.swift */; };
 		1DCE9434200F49C00009C19A /* URL+StoreHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE9433200F49C00009C19A /* URL+StoreHelpersTests.swift */; };
         1DCE9438200F60D20009C19A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1DCE9437200F60D20009C19A /* README.md */; };
@@ -43,7 +43,7 @@
 		1DCE941C200E14930009C19A /* DataRaftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRaftTests.swift; sourceTree = "<group>"; };
 		1DCE941F200E15DA0009C19A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		1DCE9421200E33D30009C19A /* DataRaftError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRaftError.swift; sourceTree = "<group>"; };
-		1DCE942B200E4FC70009C19A /* XCTestCase+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Helpers.swift"; sourceTree = "<group>"; };
+		1DCE942B200E4FC70009C19A /* XCTestCase+Expectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Expectation.swift"; sourceTree = "<group>"; };
 		1DCE942F200F45DC0009C19A /* URL+StoreHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StoreHelpers.swift"; sourceTree = "<group>"; };
 		1DCE9433200F49C00009C19A /* URL+StoreHelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StoreHelpersTests.swift"; sourceTree = "<group>"; };
         1DCE9437200F60D20009C19A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 		1DCE9423200E40760009C19A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				1DCE942B200E4FC70009C19A /* XCTestCase+Helpers.swift */,
+				1DCE942B200E4FC70009C19A /* XCTestCase+Expectation.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -324,7 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DCE942C200E4FC70009C19A /* XCTestCase+Helpers.swift in Sources */,
+				1DCE942C200E4FC70009C19A /* XCTestCase+Expectation.swift in Sources */,
 				1DCE941D200E14930009C19A /* DataRaftTests.swift in Sources */,
 				1DCE9420200E15DA0009C19A /* Model.xcdatamodeld in Sources */,
 				1DCE9434200F49C00009C19A /* URL+StoreHelpersTests.swift in Sources */,

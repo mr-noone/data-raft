@@ -11,6 +11,19 @@ import XCTest
 
 class DataRaftTests: XCTestCase {
     let bundle = Bundle(for: DataRaftTests.self)
+    var db: DataRaft?
+    
+    override func setUp() {
+        super.setUp()
+        
+        db = DataRaft()
+        try! db?.configure(modelName: "Model", bundle: bundle)
+    }
+    
+    override func tearDown() {
+        db = nil
+        super.tearDown()
+    }
     
     func testConfigureSQLite() {
         var error: Error? = nil
@@ -68,5 +81,13 @@ class DataRaftTests: XCTestCase {
             error = err as? DataRaftError
         }
         XCTAssertEqual(error, DataRaftError.ObjectModelNotFound, "Method must throw error if model with name not exists")
+    }
+    
+    func testMainContext() {
+        XCTAssertNotNil(db?.main())
+    }
+    
+    func testPrivateContext() {
+        XCTAssertNotNil(db?.private())
     }
 }
