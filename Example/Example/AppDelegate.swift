@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DataRaft
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = UIViewController()
         window?.rootViewController?.view.backgroundColor = UIColor.white
         window?.makeKeyAndVisible()
-        
         return true
     }
 }
