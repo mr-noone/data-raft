@@ -10,7 +10,23 @@
 		1DCE93F7200CE7480009C19A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE93F6200CE7480009C19A /* AppDelegate.swift */; };
 		1DCE93FE200CE7480009C19A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DCE93FD200CE7480009C19A /* Assets.xcassets */; };
 		1DCE9409200CE7DB0009C19A /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DCE9408200CE7DB0009C19A /* Launch.storyboard */; };
+		1DCE9416200E03FD0009C19A /* DataRaft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCE9417200E03FD0009C19A /* DataRaft.framework */; };
+		1DCE9419200E04040009C19A /* DataRaft.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCE9417200E03FD0009C19A /* DataRaft.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1DCE941A200E04040009C19A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1DCE9419200E04040009C19A /* DataRaft.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1DCE93F3200CE7480009C19A /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -18,6 +34,7 @@
 		1DCE93FD200CE7480009C19A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1DCE9402200CE7480009C19A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DCE9408200CE7DB0009C19A /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
+		1DCE9417200E03FD0009C19A /* DataRaft.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DataRaft.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -25,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DCE9416200E03FD0009C19A /* DataRaft.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				1DCE93F5200CE7480009C19A /* Example */,
+				1DCE9415200E03FD0009C19A /* Frameworks */,
 				1DCE93F4200CE7480009C19A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,6 +77,14 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
+		1DCE9415200E03FD0009C19A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE9417200E03FD0009C19A /* DataRaft.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -68,6 +95,7 @@
 				1DCE93EF200CE7480009C19A /* Sources */,
 				1DCE93F0200CE7480009C19A /* Frameworks */,
 				1DCE93F1200CE7480009C19A /* Resources */,
+				1DCE941A200E04040009C19A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
