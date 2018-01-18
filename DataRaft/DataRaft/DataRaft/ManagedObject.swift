@@ -13,7 +13,7 @@ public protocol ManagedObject: NSFetchRequestResult {
     static func entityName() -> String
 }
 
-extension ManagedObject {
+public extension ManagedObject {
     static func entityName() -> String {
         return String(describing: self)
     }

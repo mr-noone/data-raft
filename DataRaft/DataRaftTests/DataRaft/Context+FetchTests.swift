@@ -10,15 +10,8 @@ import XCTest
 import CoreData
 @testable import DataRaft
 
-@objc(Contact)
-public class Contact: NSManagedObject, ManagedObject {
-    @NSManaged public var firstName: String?
-    @NSManaged public var lastName: String?
-    @NSManaged public var age: Int16
-}
-
 class Context_FetchTests: XCTestCase {
-    let bundle = Bundle(for: DataRaft_PerformTests.self)
+    let bundle = Bundle(for: Context_FetchTests.self)
     var db: DataRaft!
     
     override func setUp() {
