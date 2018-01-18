@@ -70,7 +70,7 @@ class DataRaftTests: XCTestCase {
         } catch let err {
             error = err as? DataRaftError
         }
-        XCTAssertEqual(error, DataRaftError.ObjectModelNotFound, "Method must throw error if you pass empty model name.")
+        XCTAssertEqual(error, DataRaftError.ObjectModelNotFound, "Function must throw error if you pass empty model name.")
     }
     
     func testConfigureWithNotExistModel() {
@@ -80,14 +80,16 @@ class DataRaftTests: XCTestCase {
         } catch let err {
             error = err as? DataRaftError
         }
-        XCTAssertEqual(error, DataRaftError.ObjectModelNotFound, "Method must throw error if model with name not exists")
+        XCTAssertEqual(error, DataRaftError.ObjectModelNotFound, "Function must throw error if model with name not exists")
     }
     
     func testMainContext() {
-        XCTAssertNotNil(db?.main())
+        XCTAssertNotNil(db?.main(), "Must not be nil")
     }
     
     func testPrivateContext() {
-        XCTAssertNotNil(db?.private())
+        XCTAssertNotNil(db?.private(), "Must not be nil")
+        XCTAssertEqual(db?.private().parent, db?.main(), "Objects must by equal.")
+        XCTAssertNotEqual(db?.private(), db?.private(), "Function must return new private context.")
     }
 }
