@@ -46,6 +46,6 @@ class URL_StoreHelpersTests: XCTestCase {
     }
     
     func testFileUrlWithNilUrl() {
-        XCTAssertNil(URL(fileURLWithURL: nil), "The method must return nil if you pass nil url.")
+        XCTAssertNil(URL(fileURLWithURL: nil), "The function must return nil if you pass nil url.")
     }
 }
