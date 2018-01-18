@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 extension NSManagedObjectContext {
+    /// Attempts to commit unsaved changes to registered objects to the persistent store.
     public func saveToStore() throws {
         var error: Error? = nil
         
