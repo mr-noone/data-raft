@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D6408C820109660004CA3FA /* Context+Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6408C720109660004CA3FA /* Context+Fetch.swift */; };
 		1D6E86AA200FA45F00F6A3E2 /* DataRaft+Perform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E86A9200FA45F00F6A3E2 /* DataRaft+Perform.swift */; };
 		1D6E86AC200FA49F00F6A3E2 /* DataRaft+PerformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E86AB200FA49F00F6A3E2 /* DataRaft+PerformTests.swift */; };
+		1D9DB1E92010B27200286F53 /* Context+FetchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9DB1E82010B27200286F53 /* Context+FetchTests.swift */; };
+		1D9DB1EB2010C76300286F53 /* ManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9DB1EA2010C76200286F53 /* ManagedObject.swift */; };
 		1DCE93DA200CE5330009C19A /* DataRaft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCE93D0200CE5330009C19A /* DataRaft.framework */; };
 		1DCE93E1200CE5330009C19A /* DataRaft.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DCE93D3200CE5330009C19A /* DataRaft.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DCE940D200CE8950009C19A /* DataRaft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE940A200CE88E0009C19A /* DataRaft.swift */; };
@@ -34,8 +37,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D6408C720109660004CA3FA /* Context+Fetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Fetch.swift"; sourceTree = "<group>"; };
 		1D6E86A9200FA45F00F6A3E2 /* DataRaft+Perform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRaft+Perform.swift"; sourceTree = "<group>"; };
 		1D6E86AB200FA49F00F6A3E2 /* DataRaft+PerformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRaft+PerformTests.swift"; sourceTree = "<group>"; };
+		1D9DB1E82010B27200286F53 /* Context+FetchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+FetchTests.swift"; sourceTree = "<group>"; };
+		1D9DB1EA2010C76200286F53 /* ManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedObject.swift; sourceTree = "<group>"; };
 		1DCE93D0200CE5330009C19A /* DataRaft.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DataRaft.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DCE93D3200CE5330009C19A /* DataRaft.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataRaft.h; sourceTree = "<group>"; };
 		1DCE93D4200CE5330009C19A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -193,6 +199,8 @@
 			children = (
 				1DCE940A200CE88E0009C19A /* DataRaft.swift */,
 				1D6E86A9200FA45F00F6A3E2 /* DataRaft+Perform.swift */,
+				1D6408C720109660004CA3FA /* Context+Fetch.swift */,
+				1D9DB1EA2010C76200286F53 /* ManagedObject.swift */,
 				1DCE9421200E33D30009C19A /* DataRaftError.swift */,
 				1DCE9413200CF1870009C19A /* StoreType.swift */,
 			);
@@ -204,6 +212,7 @@
 			children = (
 				1DCE941C200E14930009C19A /* DataRaftTests.swift */,
 				1D6E86AB200FA49F00F6A3E2 /* DataRaft+PerformTests.swift */,
+				1D9DB1E82010B27200286F53 /* Context+FetchTests.swift */,
 			);
 			path = DataRaft;
 			sourceTree = "<group>";
@@ -319,7 +328,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D6408C820109660004CA3FA /* Context+Fetch.swift in Sources */,
 				1DCE9422200E33D30009C19A /* DataRaftError.swift in Sources */,
+				1D9DB1EB2010C76300286F53 /* ManagedObject.swift in Sources */,
 				1DCE940D200CE8950009C19A /* DataRaft.swift in Sources */,
 				1DCE9414200CF1870009C19A /* StoreType.swift in Sources */,
 				1DCE9430200F45DC0009C19A /* URL+StoreHelpers.swift in Sources */,
@@ -331,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D9DB1E92010B27200286F53 /* Context+FetchTests.swift in Sources */,
 				1D6E86AC200FA49F00F6A3E2 /* DataRaft+PerformTests.swift in Sources */,
 				1DCE942C200E4FC70009C19A /* XCTestCase+Expectation.swift in Sources */,
 				1DCE941D200E14930009C19A /* DataRaftTests.swift in Sources */,
