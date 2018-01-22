@@ -27,7 +27,7 @@ class Context_SaveTests: XCTestCase {
     
     func testSaveToStore() {
         db.performAndWaitOnPrivate { context in
-            NSEntityDescription.insertNewObject(forEntityName: Contact.entityName(), into: context)
+            NSEntityDescription.insertNewObject(forEntityName: Contact.entityName, into: context)
             try! context.saveToStore()
         }
         
