@@ -1,16 +1,15 @@
 //
-//  Context+Save.swift
+//  Context+NewTests.swift
 //  DataRaftTests
 //
-//  Created by Aleksey Zgurskiy on 18.01.2018.
+//  Created by Aleksey Zgurskiy on 22.01.2018.
 //  Copyright © 2018 Graviti Mobail. All rights reserved.
 //
 
 import XCTest
-import CoreData
 @testable import DataRaft
 
-class Context_SaveTests: XCTestCase {
+class Context_NewTests: XCTestCase {
     let bundle = Bundle(for: Context_SaveTests.self)
     var db: DataRaft!
     
@@ -25,15 +24,10 @@ class Context_SaveTests: XCTestCase {
         super.tearDown()
     }
     
-    func testSaveToStore() {
-        db.performAndWaitOnPrivate { context in
-            NSEntityDescription.insertNewObject(forEntityName: Contact.entityName, into: context)
-            try! context.saveToStore()
-        }
-        
+    func testNewObject() {
         db.performAndWaitOnMain { context in
-            let contacts: [Contact] = try! context.fetch()
-            XCTAssertNotNil(contacts.first)
+            let contact: Contact = context.new()
+            XCTAssertNotNil(contact)
         }
     }
 }

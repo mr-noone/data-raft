@@ -9,12 +9,8 @@
 import Foundation
 import CoreData
 
-public protocol ManagedObject: NSFetchRequestResult {
-    static func entityName() -> String
-}
-
-public extension ManagedObject {
-    static func entityName() -> String {
+extension NSManagedObject {
+    public static var entityName: String {
         return String(describing: self)
     }
 }

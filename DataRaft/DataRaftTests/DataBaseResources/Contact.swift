@@ -11,7 +11,7 @@ import CoreData
 import DataRaft
 
 @objc(Contact)
-public class Contact: NSManagedObject, ManagedObject {
+public class Contact: NSManagedObject {
     @NSManaged public var firstName: String?
     @NSManaged public var lastName: String?
     @NSManaged public var age: Int16

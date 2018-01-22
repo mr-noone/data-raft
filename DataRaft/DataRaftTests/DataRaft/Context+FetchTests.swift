@@ -20,7 +20,7 @@ class Context_FetchTests: XCTestCase {
         try! db.configure(modelName: "Model", bundle: bundle)
         db.performAndWaitOnMain { context in
             for _ in 1...10 {
-                NSEntityDescription.insertNewObject(forEntityName: Contact.entityName(), into: context)
+                NSEntityDescription.insertNewObject(forEntityName: Contact.entityName, into: context)
             }
             try! context.save()
         }
