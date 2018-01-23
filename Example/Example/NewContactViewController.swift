@@ -24,7 +24,10 @@ class NewContactViewController: UITableViewController {
         if let objectID = objectID {
             navigationItem.title = "Edit contact"
             AppDelegate.shared.db.performOnMain { context in
-                let contact: Contact = context.object(with: objectID)
+                guard let contact = context.object(with: objectID) as? Contact else {
+                    return
+                }
+                
                 self.firstNameTextField.text = contact.firstName
                 self.lastNameTextField.text = contact.lastName
                 self.phoneTextField.text = contact.phone
@@ -48,7 +51,7 @@ class NewContactViewController: UITableViewController {
         AppDelegate.shared.db.performAndWaitOnPrivate { context in
             let contact: Contact
             if let objectID = self.objectID {
-                contact = context.object(with: objectID)
+                contact = context.object(with: objectID) as! Contact
             } else {
                 contact = context.new()
             }
