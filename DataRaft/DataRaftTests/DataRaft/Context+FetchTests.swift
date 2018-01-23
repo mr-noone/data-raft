@@ -31,20 +31,6 @@ class Context_FetchTests: XCTestCase {
         super.tearDown()
     }
     
-    func testObjectWithObjectID() {
-        var objectID: NSManagedObjectID!
-        
-        db.performAndWaitOnPrivate { context in
-            let contact = NSEntityDescription.insertNewObject(forEntityName: Contact.entityName, into: context)
-            objectID = contact.objectID
-        }
-        
-        db.performAndWaitOnMain { context in
-            let contact: Contact = context.object(with: objectID)
-            XCTAssertNotNil(contact, "Must not be nil")
-        }
-    }
-    
     func testFetch() {
         db.performAndWaitOnMain { context in
             let contacts: [Contact] = try! context.fetch(predicate: nil, sortedBy: nil, ascending: true)
