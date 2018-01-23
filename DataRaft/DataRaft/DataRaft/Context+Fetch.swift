@@ -10,6 +10,16 @@ import Foundation
 import CoreData
 
 extension NSManagedObjectContext {
+    /// Returns an object for a specified ID even if the object needs to be fetched.
+    ///
+    /// If the object is not registered in the context, it may be fetched or returned as a fault. This method always returns an object. The data in the persistent store represented by objectID is assumed to exist—if it does not, the returned object throws an exception when you access any property (that is, when the fault is fired). The benefit of this behavior is that it allows you to create and use faults, then create the underlying data later or in a separate context.
+    ///
+    /// - Parameter objectID: An object ID.
+    /// - Returns: The object for the specified ID.
+    public func object<T: NSManagedObject>(with objectID: NSManagedObjectID) -> T {
+        return self.object(with: objectID) as! T
+    }
+    
     /// Returns an array of objects that meet the criteria specified by a given predicate and sort descriptors.
     ///
     /// - Parameters:
