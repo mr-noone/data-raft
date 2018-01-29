@@ -28,7 +28,6 @@
 		1DCE942C200E4FC70009C19A /* XCTestCase+Expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE942B200E4FC70009C19A /* XCTestCase+Expectation.swift */; };
 		1DCE9430200F45DC0009C19A /* URL+StoreHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE942F200F45DC0009C19A /* URL+StoreHelpers.swift */; };
 		1DCE9434200F49C00009C19A /* URL+StoreHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE9433200F49C00009C19A /* URL+StoreHelpersTests.swift */; };
-		1DCE9438200F60D20009C19A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1DCE9437200F60D20009C19A /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +46,7 @@
 		1D3A03AA2010E7EB002B491C /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		1D5093AE2016327200D59A73 /* Context+New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+New.swift"; sourceTree = "<group>"; };
 		1D5093B02016364D00D59A73 /* Context+NewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+NewTests.swift"; sourceTree = "<group>"; };
+		1D5093C220175E8500D59A73 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../../../LICENSE; sourceTree = "<group>"; };
 		1D6408C720109660004CA3FA /* Context+Fetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Fetch.swift"; sourceTree = "<group>"; };
 		1D6E86A9200FA45F00F6A3E2 /* DataRaft+Perform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRaft+Perform.swift"; sourceTree = "<group>"; };
 		1D6E86AB200FA49F00F6A3E2 /* DataRaft+PerformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRaft+PerformTests.swift"; sourceTree = "<group>"; };
@@ -160,6 +160,7 @@
 			children = (
 				1DCE93D4200CE5330009C19A /* Info.plist */,
 				1DCE9437200F60D20009C19A /* README.md */,
+				1D5093C220175E8500D59A73 /* LICENSE */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -325,7 +326,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DCE9438200F60D20009C19A /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
