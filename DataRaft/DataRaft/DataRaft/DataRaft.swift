@@ -69,7 +69,7 @@ public final class DataRaft {
         }
     }
     
-    /// Return the main context for cirrent stack.
+    /// Return the main context for current stack.
     ///
     /// - Returns: The instance of NSManagedObjectContext.
     public func main() -> NSManagedObjectContext {
