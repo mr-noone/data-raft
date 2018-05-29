@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import DataRaft
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    class var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
     var window: UIWindow?
+    var db = DataRaft()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UIViewController()
-        window?.rootViewController?.view.backgroundColor = UIColor.white
-        window?.makeKeyAndVisible()
-        
+        try! db.configure(type: .sqLite, modelName: "Example")
         return true
     }
 }

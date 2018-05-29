@@ -7,8 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D3A03A72010DED0002B491C /* Context+Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3A03A62010DED0002B491C /* Context+Save.swift */; };
+		1D3A03A92010E4FB002B491C /* Context+SaveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3A03A82010E4FB002B491C /* Context+SaveTests.swift */; };
+		1D3A03AB2010E7EB002B491C /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3A03AA2010E7EB002B491C /* Contact.swift */; };
+		1D5093AF2016327200D59A73 /* Context+New.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5093AE2016327200D59A73 /* Context+New.swift */; };
+		1D5093B12016364D00D59A73 /* Context+NewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5093B02016364D00D59A73 /* Context+NewTests.swift */; };
+		1D6408C820109660004CA3FA /* Context+Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6408C720109660004CA3FA /* Context+Fetch.swift */; };
+		1D6E86AA200FA45F00F6A3E2 /* DataRaft+Perform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E86A9200FA45F00F6A3E2 /* DataRaft+Perform.swift */; };
+		1D6E86AC200FA49F00F6A3E2 /* DataRaft+PerformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6E86AB200FA49F00F6A3E2 /* DataRaft+PerformTests.swift */; };
+		1D9DB1E92010B27200286F53 /* Context+FetchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9DB1E82010B27200286F53 /* Context+FetchTests.swift */; };
+		1D9DB1EB2010C76300286F53 /* NSManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9DB1EA2010C76200286F53 /* NSManagedObject.swift */; };
 		1DCE93DA200CE5330009C19A /* DataRaft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCE93D0200CE5330009C19A /* DataRaft.framework */; };
 		1DCE93E1200CE5330009C19A /* DataRaft.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DCE93D3200CE5330009C19A /* DataRaft.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DCE940D200CE8950009C19A /* DataRaft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE940A200CE88E0009C19A /* DataRaft.swift */; };
+		1DCE9410200CE9F50009C19A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCE940F200CE9F50009C19A /* CoreData.framework */; };
+		1DCE9414200CF1870009C19A /* StoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE9413200CF1870009C19A /* StoreType.swift */; };
+		1DCE941D200E14930009C19A /* DataRaftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE941C200E14930009C19A /* DataRaftTests.swift */; };
+		1DCE9420200E15DA0009C19A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE941E200E15DA0009C19A /* Model.xcdatamodeld */; };
+		1DCE9422200E33D30009C19A /* DataRaftError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE9421200E33D30009C19A /* DataRaftError.swift */; };
+		1DCE942C200E4FC70009C19A /* XCTestCase+Expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE942B200E4FC70009C19A /* XCTestCase+Expectation.swift */; };
+		1DCE9430200F45DC0009C19A /* URL+StoreHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE942F200F45DC0009C19A /* URL+StoreHelpers.swift */; };
+		1DCE9434200F49C00009C19A /* URL+StoreHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCE9433200F49C00009C19A /* URL+StoreHelpersTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,11 +41,32 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D3A03A62010DED0002B491C /* Context+Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Save.swift"; sourceTree = "<group>"; };
+		1D3A03A82010E4FB002B491C /* Context+SaveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+SaveTests.swift"; sourceTree = "<group>"; };
+		1D3A03AA2010E7EB002B491C /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		1D5093AE2016327200D59A73 /* Context+New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+New.swift"; sourceTree = "<group>"; };
+		1D5093B02016364D00D59A73 /* Context+NewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+NewTests.swift"; sourceTree = "<group>"; };
+		1D5093C220175E8500D59A73 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../../../LICENSE; sourceTree = "<group>"; };
+		1D6408C720109660004CA3FA /* Context+Fetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+Fetch.swift"; sourceTree = "<group>"; };
+		1D6E86A9200FA45F00F6A3E2 /* DataRaft+Perform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRaft+Perform.swift"; sourceTree = "<group>"; };
+		1D6E86AB200FA49F00F6A3E2 /* DataRaft+PerformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRaft+PerformTests.swift"; sourceTree = "<group>"; };
+		1D9DB1E82010B27200286F53 /* Context+FetchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Context+FetchTests.swift"; sourceTree = "<group>"; };
+		1D9DB1EA2010C76200286F53 /* NSManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObject.swift; sourceTree = "<group>"; };
 		1DCE93D0200CE5330009C19A /* DataRaft.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DataRaft.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DCE93D3200CE5330009C19A /* DataRaft.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataRaft.h; sourceTree = "<group>"; };
 		1DCE93D4200CE5330009C19A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1DCE93D9200CE5330009C19A /* DataRaftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataRaftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DCE93E0200CE5330009C19A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1DCE940A200CE88E0009C19A /* DataRaft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRaft.swift; sourceTree = "<group>"; };
+		1DCE940F200CE9F50009C19A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1DCE9413200CF1870009C19A /* StoreType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreType.swift; sourceTree = "<group>"; };
+		1DCE941C200E14930009C19A /* DataRaftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRaftTests.swift; sourceTree = "<group>"; };
+		1DCE941F200E15DA0009C19A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		1DCE9421200E33D30009C19A /* DataRaftError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRaftError.swift; sourceTree = "<group>"; };
+		1DCE942B200E4FC70009C19A /* XCTestCase+Expectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Expectation.swift"; sourceTree = "<group>"; };
+		1DCE942F200F45DC0009C19A /* URL+StoreHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StoreHelpers.swift"; sourceTree = "<group>"; };
+		1DCE9433200F49C00009C19A /* URL+StoreHelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StoreHelpersTests.swift"; sourceTree = "<group>"; };
+		1DCE9437200F60D20009C19A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DCE9410200CE9F50009C19A /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +94,7 @@
 			children = (
 				1DCE93D2200CE5330009C19A /* DataRaft */,
 				1DCE93DD200CE5330009C19A /* DataRaftTests */,
+				1DCE940E200CE9F50009C19A /* Frameworks */,
 				1DCE93D1200CE5330009C19A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -70,7 +112,9 @@
 			isa = PBXGroup;
 			children = (
 				1DCE93D3200CE5330009C19A /* DataRaft.h */,
-				1DCE93D4200CE5330009C19A /* Info.plist */,
+				1DCE9435200F5DF80009C19A /* DataRaft */,
+				1DCE942D200F45910009C19A /* Extension */,
+				1DCE9427200E41160009C19A /* Supporting Files */,
 			);
 			path = DataRaft;
 			sourceTree = "<group>";
@@ -78,9 +122,115 @@
 		1DCE93DD200CE5330009C19A /* DataRaftTests */ = {
 			isa = PBXGroup;
 			children = (
-				1DCE93E0200CE5330009C19A /* Info.plist */,
+				1DCE9436200F5E660009C19A /* DataRaft */,
+				1DCE9431200F499F0009C19A /* Extension */,
+				1DCE9428200E41480009C19A /* DataBaseResources */,
+				1DCE9423200E40760009C19A /* Helpers */,
+				1DCE9426200E41040009C19A /* Supporting Files */,
 			);
 			path = DataRaftTests;
+			sourceTree = "<group>";
+		};
+		1DCE940E200CE9F50009C19A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE940F200CE9F50009C19A /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1DCE9423200E40760009C19A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE942B200E4FC70009C19A /* XCTestCase+Expectation.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1DCE9426200E41040009C19A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE93E0200CE5330009C19A /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1DCE9427200E41160009C19A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE93D4200CE5330009C19A /* Info.plist */,
+				1DCE9437200F60D20009C19A /* README.md */,
+				1D5093C220175E8500D59A73 /* LICENSE */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1DCE9428200E41480009C19A /* DataBaseResources */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE941E200E15DA0009C19A /* Model.xcdatamodeld */,
+				1D3A03AA2010E7EB002B491C /* Contact.swift */,
+			);
+			path = DataBaseResources;
+			sourceTree = "<group>";
+		};
+		1DCE942D200F45910009C19A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE942E200F45A20009C19A /* Foundation */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		1DCE942E200F45A20009C19A /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE942F200F45DC0009C19A /* URL+StoreHelpers.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		1DCE9431200F499F0009C19A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE9432200F49A90009C19A /* Foundation */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		1DCE9432200F49A90009C19A /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE9433200F49C00009C19A /* URL+StoreHelpersTests.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		1DCE9435200F5DF80009C19A /* DataRaft */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE940A200CE88E0009C19A /* DataRaft.swift */,
+				1D6E86A9200FA45F00F6A3E2 /* DataRaft+Perform.swift */,
+				1D6408C720109660004CA3FA /* Context+Fetch.swift */,
+				1D3A03A62010DED0002B491C /* Context+Save.swift */,
+				1D5093AE2016327200D59A73 /* Context+New.swift */,
+				1D9DB1EA2010C76200286F53 /* NSManagedObject.swift */,
+				1DCE9421200E33D30009C19A /* DataRaftError.swift */,
+				1DCE9413200CF1870009C19A /* StoreType.swift */,
+			);
+			path = DataRaft;
+			sourceTree = "<group>";
+		};
+		1DCE9436200F5E660009C19A /* DataRaft */ = {
+			isa = PBXGroup;
+			children = (
+				1DCE941C200E14930009C19A /* DataRaftTests.swift */,
+				1D6E86AB200FA49F00F6A3E2 /* DataRaft+PerformTests.swift */,
+				1D9DB1E82010B27200286F53 /* Context+FetchTests.swift */,
+				1D3A03A82010E4FB002B491C /* Context+SaveTests.swift */,
+				1D5093B02016364D00D59A73 /* Context+NewTests.swift */,
+			);
+			path = DataRaft;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +343,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D6408C820109660004CA3FA /* Context+Fetch.swift in Sources */,
+				1DCE9422200E33D30009C19A /* DataRaftError.swift in Sources */,
+				1D3A03A72010DED0002B491C /* Context+Save.swift in Sources */,
+				1D9DB1EB2010C76300286F53 /* NSManagedObject.swift in Sources */,
+				1DCE940D200CE8950009C19A /* DataRaft.swift in Sources */,
+				1DCE9414200CF1870009C19A /* StoreType.swift in Sources */,
+				1DCE9430200F45DC0009C19A /* URL+StoreHelpers.swift in Sources */,
+				1D5093AF2016327200D59A73 /* Context+New.swift in Sources */,
+				1D6E86AA200FA45F00F6A3E2 /* DataRaft+Perform.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +359,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D5093B12016364D00D59A73 /* Context+NewTests.swift in Sources */,
+				1D3A03A92010E4FB002B491C /* Context+SaveTests.swift in Sources */,
+				1D9DB1E92010B27200286F53 /* Context+FetchTests.swift in Sources */,
+				1D6E86AC200FA49F00F6A3E2 /* DataRaft+PerformTests.swift in Sources */,
+				1DCE942C200E4FC70009C19A /* XCTestCase+Expectation.swift in Sources */,
+				1D3A03AB2010E7EB002B491C /* Contact.swift in Sources */,
+				1DCE941D200E14930009C19A /* DataRaftTests.swift in Sources */,
+				1DCE9420200E15DA0009C19A /* Model.xcdatamodeld in Sources */,
+				1DCE9434200F49C00009C19A /* URL+StoreHelpersTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,7 +413,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -305,7 +473,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -337,8 +505,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = DataRaft/Info.plist;
+				INFOPLIST_FILE = "DataRaft/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nullgr.data-raft";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -358,8 +527,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = DataRaft/Info.plist;
+				INFOPLIST_FILE = "DataRaft/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nullgr.data-raft";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -374,7 +544,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9H8F23E62B;
-				INFOPLIST_FILE = DataRaftTests/Info.plist;
+				INFOPLIST_FILE = "DataRaftTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nullgr.DataRaftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -388,7 +558,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9H8F23E62B;
-				INFOPLIST_FILE = DataRaftTests/Info.plist;
+				INFOPLIST_FILE = "DataRaftTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nullgr.DataRaftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -428,6 +598,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1DCE941E200E15DA0009C19A /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1DCE941F200E15DA0009C19A /* Model.xcdatamodel */,
+			);
+			currentVersion = 1DCE941F200E15DA0009C19A /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1DCE93C7200CE5330009C19A /* Project object */;
 }
