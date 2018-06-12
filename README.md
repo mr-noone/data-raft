@@ -95,4 +95,4 @@ With iOS 8 and Yosemite, the Core Data framework supports concurrency debugging.
 
 ## License
 
-MIT license. See the [LICENSE file]() for details.
+MIT license. See the [LICENSE file](https://github.com/nullgr/data-raft/blob/master/LICENSE) for details.
