@@ -9,11 +9,11 @@
 import Foundation
 
 public enum DataRaftError: Error {
-    case ObjectModelNotFound
-    
-    var localizedDescription: String {
-        switch self {
-        case .ObjectModelNotFound: return "The data model file not found."
-        }
+  case ObjectModelNotFound
+  
+  var localizedDescription: String {
+    switch self {
+    case .ObjectModelNotFound: return "The data model file not found."
     }
+  }
 }

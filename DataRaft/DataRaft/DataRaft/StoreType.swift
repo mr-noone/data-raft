@@ -10,17 +10,17 @@ import Foundation
 import CoreData
 
 public enum StoreType {
-    public typealias RawValue = String
-    
-    case inMemory
-    case sqLite
-    
-    public var rawValue: RawValue {
-        switch self {
-        case .inMemory:
-            return NSInMemoryStoreType
-        default:
-            return NSSQLiteStoreType
-        }
+  public typealias RawValue = String
+  
+  case inMemory
+  case sqLite
+  
+  public var rawValue: RawValue {
+    switch self {
+    case .inMemory:
+      return NSInMemoryStoreType
+    default:
+      return NSSQLiteStoreType
     }
+  }
 }
