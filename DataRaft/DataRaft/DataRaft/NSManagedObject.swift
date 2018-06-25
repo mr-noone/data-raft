@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 extension NSManagedObject {
-    public static var entityName: String {
-        return String(describing: self)
-    }
+  public static var entityName: String {
+    return String(describing: self)
+  }
 }
