@@ -15,21 +15,14 @@ extension NSManagedObjectContext {
     var error: Error? = nil
     
     performAndWait {
-      if hasChanges {
-        do {
-          try save()
-          if let parent = parent {
-            try parent.saveToStore()
-          }
-        } catch let anError {
-          error = anError
-          return
-        }
+      do {
+        if hasChanges { try save() }
+        try parent?.saveToStore()
+      } catch let anError {
+        error = anError
       }
     }
     
-    if let error = error {
-      throw error
-    }
+    if let error = error { throw error }
   }
 }
