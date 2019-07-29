@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   
   s.source = { :git => 'https://github.com/nullgr/data-raft.git', :tag => "#{s.version}" }
   s.source_files = 'DataRaft/DataRaft/**/*.{swift}'
-  s.swift_version = '4.1'
+  s.swift_version = '5.0'
 end
