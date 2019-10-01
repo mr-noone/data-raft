@@ -12,7 +12,7 @@ import DataRaft
 
 @objc(Contact)
 public class Contact: NSManagedObject {
-    @NSManaged public var firstName: String?
-    @NSManaged public var lastName: String?
-    @NSManaged public var age: Int16
+  @NSManaged public var firstName: String?
+  @NSManaged public var lastName: String?
+  @NSManaged public var age: Int16
 }
