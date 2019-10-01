@@ -9,10 +9,16 @@
 import Foundation
 import CoreData
 
+public protocol DataRaftDelegate: AnyObject {
+  func dataRaft(_ dataRaft: DataRaft, didCreate context: NSManagedObjectContext)
+}
+
 public final class DataRaft {
   private var storeCoordinator: NSPersistentStoreCoordinator!
   private var mainContext: NSManagedObjectContext!
   private var isConfigured = false
+  
+  public weak var delegate: DataRaftDelegate?
   
   public init() {}
   
@@ -82,6 +88,7 @@ public final class DataRaft {
     if mainContext == nil {
       mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
       mainContext.persistentStoreCoordinator = storeCoordinator
+      delegate?.dataRaft(self, didCreate: mainContext)
     }
     
     return mainContext!
@@ -97,6 +104,7 @@ public final class DataRaft {
     
     let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
     privateContext.parent = main()
+    delegate?.dataRaft(self, didCreate: privateContext)
     return privateContext
   }
   
