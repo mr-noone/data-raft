@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'DataRaft'
-  s.version = '1.0.4'
+  s.version = '1.0.5'
   
   s.summary = 'DataRaft is a small Swift framework that makes it both easier to use Core Data.'
   s.homepage = 'https://github.com/mr-noone/data-raft.git'
