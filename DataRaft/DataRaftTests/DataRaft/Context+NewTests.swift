@@ -10,24 +10,24 @@ import XCTest
 @testable import DataRaft
 
 class Context_NewTests: XCTestCase {
-    let bundle = Bundle(for: Context_SaveTests.self)
-    var db: DataRaft!
-    
-    override func setUp() {
-        super.setUp()
-        db = DataRaft()
-        try! db.configure(modelName: "Model", bundle: bundle)
+  let bundle = Bundle(for: Context_SaveTests.self)
+  var db: DataRaft!
+  
+  override func setUp() {
+    super.setUp()
+    db = DataRaft()
+    try! db.configure(modelName: "Model", bundle: bundle)
+  }
+  
+  override func tearDown() {
+    db = nil
+    super.tearDown()
+  }
+  
+  func testNewObject() {
+    db.performAndWaitOnMain { context in
+      let contact: Contact = context.new()
+      XCTAssertNotNil(contact)
     }
-    
-    override func tearDown() {
-        db = nil
-        super.tearDown()
-    }
-    
-    func testNewObject() {
-        db.performAndWaitOnMain { context in
-            let contact: Contact = context.new()
-            XCTAssertNotNil(contact)
-        }
-    }
+  }
 }

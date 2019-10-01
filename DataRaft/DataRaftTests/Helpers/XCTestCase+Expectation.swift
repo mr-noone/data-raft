@@ -9,9 +9,9 @@
 import XCTest
 
 extension XCTestCase {
-    func expectation(description: String = "", timeout seconds: TimeInterval = 30.0, closure: (XCTestExpectation) -> ()) {
-        let expectation = XCTestExpectation(description: description)
-        closure(expectation)
-        wait(for: [expectation], timeout: seconds)
-    }
+  func expectation(description: String = "", timeout seconds: TimeInterval = 30.0, closure: (XCTestExpectation) -> ()) {
+    let expectation = XCTestExpectation(description: description)
+    closure(expectation)
+    wait(for: [expectation], timeout: seconds)
+  }
 }
