@@ -11,6 +11,12 @@ import CoreData
 
 public protocol DataRaftDelegate: AnyObject {
   func dataRaft(_ dataRaft: DataRaft, didCreate context: NSManagedObjectContext)
+  func dataRaft(_ dataRaft: DataRaft, didCreate model: NSManagedObjectModel)
+}
+
+public extension DataRaftDelegate {
+  func dataRaft(_ dataRaft: DataRaft, didCreate context: NSManagedObjectContext) {}
+  func dataRaft(_ dataRaft: DataRaft, didCreate model: NSManagedObjectModel) {}
 }
 
 public final class DataRaft {
@@ -38,6 +44,8 @@ public final class DataRaft {
     else {
       throw DataRaftError.ObjectModelNotFound
     }
+    
+    delegate?.dataRaft(self, didCreate: model)
     
     var storeUrl: URL?
     if type == .sqLite {
