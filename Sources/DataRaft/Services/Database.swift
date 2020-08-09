@@ -5,10 +5,10 @@ public class Database {
   
   private let mainConnection: Connection
   private let observConnection: Connection
-  private var observers = [TransactionObserver]()
+  private var observers = [ObserverBox]()
   
   private lazy var didUpdate: Connection.DidUpdateCallback = { [unowned self] event in
-    self.observers.filter {
+    self.observers.compactMap { $0.unbox }.filter {
       $0.observes(event: event)
     }.forEach {
       $0.connectionDidChange(self.observConnection, event: event)
@@ -16,15 +16,15 @@ public class Database {
   }
   
   private lazy var willCommit: Connection.WillCommitCallback = { [unowned self] in
-    try self.observers.forEach { try $0.connectionWillCommit(self.observConnection) }
+    try self.observers.compactMap { $0.unbox }.forEach { try $0.connectionWillCommit(self.observConnection) }
   }
   
   private lazy var didCommit: Connection.DidCommitCallback = { [unowned self] in
-    self.observers.forEach { $0.connectionDidCommit(self.observConnection) }
+    self.observers.compactMap { $0.unbox }.forEach { $0.connectionDidCommit(self.observConnection) }
   }
   
   private lazy var didRollback: Connection.DidRollbackCallback = { [unowned self] in
-    self.observers.forEach { $0.connectionDidRollback(self.observConnection) }
+    self.observers.compactMap { $0.unbox }.forEach { $0.connectionDidRollback(self.observConnection) }
   }
   
   // MARK: - Inits
@@ -51,8 +51,11 @@ public class Database {
 // MARK: - Public
 
 public extension Database {
-  func add(_ observer: TransactionObserver) {
-    observers.append(observer)
+  func add(_ observer: TransactionObserver, extent: ObservationExtent) {
+    switch extent {
+    case .observerLifetime: observers.append(.init(weak: observer))
+    case .databaseLifetime: observers.append(.init(strong: observer))
+    }
   }
   
   func perform<T>(closure: @escaping (Connection) throws -> (T)) throws -> T {
