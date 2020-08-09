@@ -3,12 +3,12 @@ import Foundation
 public class RecordCoder {
   public init() {}
   
-  func decode<T: Decodable>(_ type: T.Type, from record: Record) throws -> T {
+  public func decode<T: Decodable>(_ type: T.Type, from record: Record) throws -> T {
     let decoder = RecordDecoder(record: record)
     return try T(from: decoder)
   }
   
-  func encode<T: Encodable>(_ value: T) throws -> Record {
+  public func encode<T: Encodable>(_ value: T) throws -> Record {
     let encoder = RecordEncoder()
     try value.encode(to: encoder)
     return encoder.record
