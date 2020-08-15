@@ -1,6 +1,6 @@
 import Foundation
 
-extension DatabaseValueConvertible where Self: RawRepresentable, RawValue: DatabaseValueConvertible {
+public extension DatabaseValueConvertible where Self: RawRepresentable, RawValue: DatabaseValueConvertible {
   var databaseValue: DatabaseValue {
     return rawValue.databaseValue
   }
