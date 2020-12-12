@@ -1,53 +1,54 @@
 import Foundation
+import SQLighter
 
 public struct Record: Sequence, IteratorProtocol {
-  public typealias Name = String
-  public typealias Value = DatabaseValue
-  public typealias Element = (name: Name, value: Value)
+  public typealias Column = SQLColumn
+  public typealias Value = SQLValue
+  public typealias Element = (column: Column, value: Value)
   
   private var values: [Element] = []
   private var cursor: Int = 0
   
-  public var names: [String] {
-    values.map { $0.name }
-  }
-  
-  public var indexes: [Arguments.Index] {
-    values.map { .init(name: $0.name) }
+  public var columns: [Column] {
+    values.map { $0.column }
   }
   
   public var first: Element? {
     values.first
   }
   
-  public subscript(name: Name) -> Value? {
+  public subscript(column: Column) -> Value? {
     get {
-      return values.first { $0.name == name }?.value
+      values.first { $0.column.sqlString == column.sqlString }?.value
     }
     set {
+      let predicate: (Element) -> Bool = {
+        $0.column.sqlString == column.sqlString
+      }
+      
       if let value = newValue {
-        if let index = values.firstIndex(where: { $0.name == name }) {
+        if let index = values.firstIndex(where: predicate) {
           values[index].value = value
         } else {
-          values.append((name, value))
+          values.append((column, value))
         }
       } else {
-        values.removeAll { $0.name == name }
+        values.removeAll(where: predicate)
       }
     }
   }
   
-  public func appending(_ value: Value, for name: Name) -> Record {
-    var record = self
-    record[name] = value
-    return record
+  public func appending(_ value: Value, for column: Column) -> Record {
+    var row = self
+    row[column] = value
+    return row
   }
   
   public func makeIterator() -> Record {
     return self
   }
   
-  mutating public func next() -> Element? {
+  public mutating func next() -> (column: Column, value: Value)? {
     if cursor < values.count {
       return values[cursor++]
     } else {

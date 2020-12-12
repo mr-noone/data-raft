@@ -11,5 +11,3 @@ extension Pointer {
     return Unmanaged.passUnretained(value).toOpaque()
   }
 }
-
-extension Connection: Pointer {}
