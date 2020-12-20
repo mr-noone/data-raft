@@ -14,11 +14,10 @@ let package = Package(
   ],
   dependencies: [
     .package(name: "CSQLite", url: "https://github.com/mr-noone/csqlite.git", .exact("1.0.0")),
-    .package(name: "WeakArray", url: "https://github.com/mr-noone/weak-array.git", .exact("0.0.2")),
     .package(name: "SQLighter", url: "https://github.com/mr-noone/sqlighter.git", .upToNextMajor(from: "1.0.0"))
   ],
   targets: [
-    .target(name: "DataRaft", dependencies: ["CSQLite", "SQLighter", "WeakArray"]),
+    .target(name: "DataRaft", dependencies: ["CSQLite", "SQLighter"]),
     .testTarget(name: "DataRaftTests", dependencies: ["DataRaft"])
   ]
 )

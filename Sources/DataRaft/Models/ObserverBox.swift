@@ -1,29 +1,38 @@
 import Foundation
 
 class ObserverBox: TransactionObserver {
-  let observer: TransactionObserver
+  private weak var weak: TransactionObserver?
+  private var strong: TransactionObserver?
   
-  init(_ observer: TransactionObserver) {
-    self.observer = observer
+  var unbox: TransactionObserver? {
+    return strong ?? weak
+  }
+  
+  init(weak: TransactionObserver) {
+      self.weak = weak
+  }
+  
+  init(strong: TransactionObserver) {
+      self.strong = strong
   }
   
   func observes(event: ObserverEvent) -> Bool {
-    return observer.observes(event: event)
+    return unbox?.observes(event: event) ?? false
   }
   
   func connectionDidChange(_ connection: Connection, event: ObserverEvent) {
-    observer.connectionDidChange(connection, event: event)
+    unbox?.connectionDidChange(connection, event: event)
   }
   
   func connectionWillCommit(_ connection: Connection) throws {
-    try observer.connectionWillCommit(connection)
+    try unbox?.connectionWillCommit(connection)
   }
   
   func connectionDidCommit(_ connection: Connection) {
-    observer.connectionDidCommit(connection)
+    unbox?.connectionDidCommit(connection)
   }
   
   func connectionDidRollback(_ connection: Connection) {
-    observer.connectionDidRollback(connection)
+    unbox?.connectionDidRollback(connection)
   }
 }

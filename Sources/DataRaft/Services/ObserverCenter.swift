@@ -1,11 +1,10 @@
 import Foundation
-import WeakArray
 
 public final class ObserverCenter: Pointer {
   private static var centers = [UUID : ObserverCenter]()
   
   private let connection: Connection
-  private var observers = WeakArray<ObserverBox>()
+  private var observers = [ObserverBox]()
   
   init(db connection: Connection) {
     self.connection = connection
@@ -20,13 +19,15 @@ public final class ObserverCenter: Pointer {
     }()
   }
   
-  public func add(_ observer: TransactionObserver) {
-    observers.compact()
-    observers.append(.init(observer))
+  public func add(_ observer: TransactionObserver, extent: ObservationExtent = .observerLifetime) {
+    switch extent {
+    case .observerLifetime: observers.append(.init(weak: observer))
+    case .centerLifetime:   observers.append(.init(strong: observer))
+    }
   }
   
   func didUpdate(_ event: ObserverEvent) {
-    observers.compactMap { $0 }.filter {
+    observers.filter {
       $0.observes(event: event)
     }.forEach {
       $0.connectionDidChange(connection, event: event)
@@ -34,19 +35,19 @@ public final class ObserverCenter: Pointer {
   }
   
   func willCommit() throws {
-    try observers.compactMap { $0 }.forEach {
+    try observers.forEach {
       try $0.connectionWillCommit(connection)
     }
   }
   
   func didCommit() {
-    observers.compactMap { $0 }.forEach {
+    observers.forEach {
       $0.connectionDidCommit(connection)
     }
   }
   
   func didRollback() {
-    observers.compactMap { $0 }.forEach {
+    observers.forEach {
       $0.connectionDidRollback(connection)
     }
   }
