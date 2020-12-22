@@ -1,8 +1,10 @@
-## Build generated
-build/
-DerivedData/
+## General
+.DS_Store
+.swiftpm
+.build/
 
 ## Various settings
+Package.resolved
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -12,24 +14,4 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
-
-## Other
-*.moved-aside
-*.xccheckout
-*.xcscmblueprint
-
-## Obj-C/Swift specific
-*.hmap
-*.ipa
-*.dSYM.zip
-*.dSYM
-
-.build/
-
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata/
-!*.xcworkspace/contents.xcworkspacedata
-/*.gcno
-
-.DS_Store
+*.xcuserdatad/
