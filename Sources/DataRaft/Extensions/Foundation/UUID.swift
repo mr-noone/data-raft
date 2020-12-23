@@ -1,10 +1,22 @@
 import Foundation
+
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
 import CommonCrypto
+#elseif os(Linux)
+import Cryptor
+import OpenSSL
+#endif
+
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+private let DIGEST_LENGTH = CC_MD5_DIGEST_LENGTH
+#elseif os(Linux)
+private let DIGEST_LENGTH = MD5_DIGEST_LENGTH
+#endif
 
 extension UUID {
   init?(md5 bytes: [UInt8]) {
     guard
-      bytes.count == CC_MD5_DIGEST_LENGTH
+      bytes.count == DIGEST_LENGTH
     else { return nil }
     
     var bytes = bytes
