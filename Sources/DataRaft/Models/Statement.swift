@@ -1,5 +1,5 @@
 import Foundation
-import SQLite3
+import CSQLite
 import SQLighter
 
 final class Statement {
