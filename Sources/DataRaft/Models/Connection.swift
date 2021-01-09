@@ -38,14 +38,21 @@ public final class Connection: Pointer {
     configureRollbackHook()
   }
   
-  convenience init(path: String, observer center: ObserverCenter?) throws {
+  convenience init(path: String?, observer center: ObserverCenter?) throws {
     try self.init(connection: Self.open(path: path), observer: center)
   }
   
-  public convenience init(path: String) throws {
+  public convenience init(path: String?) throws {
+    let center: ObserverCenter?
+    if let path = path {
+      center = try ObserverCenter.center(for: path)
+    } else {
+      center = nil
+    }
+    
     try self.init(
       connection: Self.open(path: path),
-      observer: ObserverCenter.center(for: path)
+      observer: center
     )
   }
   
@@ -149,12 +156,14 @@ public extension Connection {
 }
 
 private extension Connection {
-  static func open(path: String) throws -> OpaquePointer {
-    try FileManager.default.createDirectory(
-      at: URL(fileURLWithPath: path).deletingLastPathComponent(),
-      withIntermediateDirectories: true,
-      attributes: nil
-    )
+  static func open(path: String?) throws -> OpaquePointer {
+    if let path = path, !path.isEmpty {
+      try FileManager.default.createDirectory(
+        at: URL(fileURLWithPath: path).deletingLastPathComponent(),
+        withIntermediateDirectories: true,
+        attributes: nil
+      )
+    }
     
     var connection: OpaquePointer! = nil
     let flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_NOMUTEX
