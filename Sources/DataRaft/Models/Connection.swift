@@ -4,10 +4,13 @@ import SQLighter
 
 public final class Connection: Pointer {
   public typealias TraceCallback = (String) -> ()
+  public typealias DatabaseFunction = (FunctionArguments) throws -> SQLValueConvertible?
+  
   private let connection: OpaquePointer
   private let center: ObserverCenter?
   private let queue: DispatchQueue
   private let queueKey = DispatchSpecificKey<Void>()
+  private var functions = Set<Function>()
   private var isCommit = false
   
   public var trace: TraceCallback?
@@ -38,14 +41,21 @@ public final class Connection: Pointer {
     configureRollbackHook()
   }
   
-  convenience init(path: String, observer center: ObserverCenter?) throws {
+  convenience init(path: String?, observer center: ObserverCenter?) throws {
     try self.init(connection: Self.open(path: path), observer: center)
   }
   
-  public convenience init(path: String) throws {
+  public convenience init(path: String?) throws {
+    let center: ObserverCenter?
+    if let path = path {
+      center = try ObserverCenter.center(for: path)
+    } else {
+      center = nil
+    }
+    
     try self.init(
       connection: Self.open(path: path),
-      observer: ObserverCenter.center(for: path)
+      observer: center
     )
   }
   
@@ -55,6 +65,16 @@ public final class Connection: Pointer {
 }
 
 public extension Connection {
+  func addFunction(_ name: String, argc: Int32, closure: @escaping DatabaseFunction) throws {
+    let function = Function(name: name, argc: argc, closure: closure)
+    functions.insert(function)
+    try function.install(in: connection)
+  }
+  
+  func removeFunction(_ name: String, argc: Int32) throws {
+    try functions.first(where: { $0.name == name && $0.argc == argc })?.uninstall(in: connection)
+  }
+  
   func isExplicitTransaction() -> Bool {
     return sqlite3_get_autocommit(connection) == 0
   }
@@ -149,12 +169,14 @@ public extension Connection {
 }
 
 private extension Connection {
-  static func open(path: String) throws -> OpaquePointer {
-    try FileManager.default.createDirectory(
-      at: URL(fileURLWithPath: path).deletingLastPathComponent(),
-      withIntermediateDirectories: true,
-      attributes: nil
-    )
+  static func open(path: String?) throws -> OpaquePointer {
+    if let path = path, !path.isEmpty {
+      try FileManager.default.createDirectory(
+        at: URL(fileURLWithPath: path).deletingLastPathComponent(),
+        withIntermediateDirectories: true,
+        attributes: nil
+      )
+    }
     
     var connection: OpaquePointer! = nil
     let flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_NOMUTEX
