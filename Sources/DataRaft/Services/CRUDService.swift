@@ -8,6 +8,8 @@ public protocol CRUDServiceProtocol {
   func read<M: Model>(_ predicate: Predicate) throws -> M?
   func read<M: Model>(_ predicate: Predicate) throws -> [M]
   
+  func count<M: Model>(_ predicate: Predicate, type: M.Type) throws -> Int
+  
   func exists<M: Model>(_ id: M.ID, type: M.Type) throws -> Bool
   func exists<M: Model>(_ predicate: Predicate, type: M.Type) throws -> Bool
   
@@ -52,6 +54,13 @@ extension CRUDService: CRUDServiceProtocol {
       let query = SQL.select(from: M.table).where(predicate).sqlQuery()
       let records: [Record] = try connection.execute(sql: query.sql, args: query.args)
       return try records.map { try coder.decode(M.self, from: $0) }
+    }
+  }
+  
+  public func count<M>(_ predicate: Predicate, type: M.Type) throws -> Int where M : Model {
+    return try connection.perform(in: .deferred) {
+      let query = SQL.count(from: type.table).where(predicate).sqlQuery()
+      return try connection.execute(sql: query.sql, args: query.args) ?? 0
     }
   }
   
