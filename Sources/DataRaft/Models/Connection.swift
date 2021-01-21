@@ -41,22 +41,13 @@ public final class Connection: Pointer {
     configureRollbackHook()
   }
   
-  convenience init(path: String?, observer center: ObserverCenter?) throws {
-    try self.init(connection: Self.open(path: path), observer: center)
+  convenience init(path: String?, options: OpenOptions, observer center: ObserverCenter?) throws {
+    try self.init(connection: Self.open(path: path, options: options), observer: center)
   }
   
-  public convenience init(path: String?) throws {
-    let center: ObserverCenter?
-    if let path = path {
-      center = try ObserverCenter.center(for: path)
-    } else {
-      center = nil
-    }
-    
-    try self.init(
-      connection: Self.open(path: path),
-      observer: center
-    )
+  public convenience init(path: String?, options: OpenOptions = [.readwrite, .create, .nomutex]) throws {
+    let center = path != nil ? try ObserverCenter.center(for: path!) : nil
+    try self.init(path: path, options: options, observer: center)
   }
   
   deinit {
@@ -169,7 +160,7 @@ public extension Connection {
 }
 
 private extension Connection {
-  static func open(path: String?) throws -> OpaquePointer {
+  static func open(path: String?, options: OpenOptions) throws -> OpaquePointer {
     if let path = path, !path.isEmpty {
       try FileManager.default.createDirectory(
         at: URL(fileURLWithPath: path).deletingLastPathComponent(),
@@ -179,8 +170,7 @@ private extension Connection {
     }
     
     var connection: OpaquePointer! = nil
-    let flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_NOMUTEX
-    let status = sqlite3_open_v2(path, &connection, flags, nil)
+    let status = sqlite3_open_v2(path, &connection, options.rawValue, nil)
     
     if status == SQLITE_OK, let connection = connection {
       return connection

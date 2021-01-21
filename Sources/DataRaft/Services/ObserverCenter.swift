@@ -13,7 +13,7 @@ public final class ObserverCenter: Pointer {
   public static func center(for dbFilePath: String) throws -> ObserverCenter {
     let uuid = UUID(md5: dbFilePath.md5)!
     return try centers[uuid] ?? {
-      let center = try ObserverCenter(db: .init(path: dbFilePath, observer: nil))
+      let center = try ObserverCenter(db: .init(path: dbFilePath, options: [.readonly], observer: nil))
       centers[uuid] = center
       return center
     }()
