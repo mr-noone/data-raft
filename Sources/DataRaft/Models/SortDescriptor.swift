@@ -1,4 +1,5 @@
 import Foundation
+import SQLighter
 
 public struct SortDescriptor {
   public let column: SQLColumn
