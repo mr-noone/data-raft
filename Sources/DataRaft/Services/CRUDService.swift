@@ -7,6 +7,9 @@ public protocol CRUDServiceProtocol {
   func read<M: Model>(_ id: M.ID) throws -> M?
   func read<M: Model>(_ predicate: Predicate) throws -> M?
   func read<M: Model>(_ predicate: Predicate) throws -> [M]
+  func read<M: Model>(_ predicate: Predicate, sortBy descriptors: [SortDescriptor]) throws -> [M]
+  func read<M: Model>(_ predicate: Predicate, limit: UInt, offset: UInt) throws -> [M]
+  func read<M: Model>(_ predicate: Predicate, sortBy descriptors: [SortDescriptor], limit: UInt, offset: UInt) throws -> [M]
   
   func count<M: Model>(_ predicate: Predicate, type: M.Type) throws -> Int
   
@@ -42,7 +45,7 @@ extension CRUDService: CRUDServiceProtocol {
   }
   
   public func read<M>(_ id: M.ID) throws -> M? where M : Model {
-    return try read(M.idKey == id).first
+    return try read(M.idKey == id, limit: 1, offset: 0).first
   }
   
   public func read<M>(_ predicate: Predicate) throws -> M? where M : Model {
@@ -52,6 +55,36 @@ extension CRUDService: CRUDServiceProtocol {
   public func read<M>(_ predicate: Predicate) throws -> [M] where M : Model {
     return try connection.perform(in: .deferred) {
       let query = SQL.select(from: M.table).where(predicate).sqlQuery()
+      let records: [Record] = try connection.execute(sql: query.sql, args: query.args)
+      return try records.map { try coder.decode(M.self, from: $0) }
+    }
+  }
+  
+  public func read<M>(_ predicate: Predicate, sortBy descriptors: [SortDescriptor]) throws -> [M] where M : Model {
+    return try connection.perform(in: .deferred) {
+      var sortQuery: OrderByQuery & SQLConvertible = SQL.select(from: M.table).where(predicate)
+      descriptors.forEach { sortQuery = $0.apply(to: sortQuery) }
+      
+      let query = sortQuery.sqlQuery()
+      let records: [Record] = try connection.execute(sql: query.sql, args: query.args)
+      return try records.map { try coder.decode(M.self, from: $0) }
+    }
+  }
+  
+  public func read<M>(_ predicate: Predicate, limit: UInt, offset: UInt) throws -> [M] where M : Model {
+    return try connection.perform(in: .deferred) {
+      let query = SQL.select(from: M.table).where(predicate).limit(limit, offset: offset).sqlQuery()
+      let records: [Record] = try connection.execute(sql: query.sql, args: query.args)
+      return try records.map { try coder.decode(M.self, from: $0) }
+    }
+  }
+  
+  public func read<M>(_ predicate: Predicate, sortBy descriptors: [SortDescriptor], limit: UInt, offset: UInt) throws -> [M] where M : Model {
+    return try connection.perform(in: .deferred) {
+      var sortQuery: OrderByQuery & LimitQuery & SQLConvertible = SQL.select(from: M.table).where(predicate)
+      descriptors.forEach { sortQuery = $0.apply(to: sortQuery) }
+      
+      let query = sortQuery.limit(limit, offset: offset).sqlQuery()
       let records: [Record] = try connection.execute(sql: query.sql, args: query.args)
       return try records.map { try coder.decode(M.self, from: $0) }
     }
