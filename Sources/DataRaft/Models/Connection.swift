@@ -46,8 +46,9 @@ public final class Connection: Pointer {
   }
   
   public convenience init(path: String?, options: OpenOptions = [.readwrite, .create, .nomutex]) throws {
+    let connection = try Self.open(path: path, options: options)
     let center = path != nil ? try ObserverCenter.center(for: path!) : nil
-    try self.init(path: path, options: options, observer: center)
+    try self.init(connection: connection, observer: center)
   }
   
   deinit {
