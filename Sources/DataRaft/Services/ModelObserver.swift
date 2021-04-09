@@ -70,27 +70,11 @@ public final class ModelObserver<M: Model>: TransactionObserver {
     guard !IDs.isEmpty else { return [] }
     
     let sql = SQL.select(from: M.table).where("rowid" ~= IDs).sqlQuery()
-    do {
-      return try connection.execute(sql: sql.sql, args: sql.args)
-    } catch {
-      #if DEBUG
-      fatalError("\(error)")
-      #else
-      return []
-      #endif
-    }
+    return (try? connection.execute(sql: sql.sql, args: sql.args)) ?? []
   }
   
   private func decode(from record: Record) -> M? {
-    do {
-      return try coder.decode(M.self, from: record)
-    } catch {
-      #if DEBUG
-      fatalError("\(error)")
-      #else
-      return nil
-      #endif
-    }
+    return try? coder.decode(M.self, from: record)
   }
   
   private func notify(_ models: [M], of kind: ObserverEvent.Kind) {
