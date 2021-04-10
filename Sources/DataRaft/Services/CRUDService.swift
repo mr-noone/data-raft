@@ -139,7 +139,7 @@ extension CRUDService: CRUDServiceProtocol {
       
       if let first = records.first {
         let columns = first.columns.map { $0.sqlString }
-        let sql = SQL.update(table: M.table).column(columns).where(M.idKey == .none).sqlQuery()
+        let sql = SQL.update(table: M.table).column(columns).where(M.idKey == "").sqlQuery()
         let args = records.map { Arguments(record: $0) + Arguments(array: [$0[M.idKey] ?? .null]) }
         try connection.execute(sql: sql.sql, args: args)
       }
