@@ -1,6 +1,8 @@
 import Foundation
 import SQLighter
 
+public typealias Predicate = SQLighter.Predicate
+
 public protocol CRUDServiceProtocol {
   func batch<T>(closure: @escaping (CRUDServiceProtocol) throws -> (T)) throws -> T
   

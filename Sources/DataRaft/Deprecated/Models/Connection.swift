@@ -54,6 +54,14 @@ public final class Connection: Pointer {
   deinit {
     sqlite3_close_v2(connection)
   }
+    
+    public static func initialize() throws {
+        sqlite3_initialize()
+    }
+    
+    public static func shutdown() throws {
+        sqlite3_shutdown()
+    }
 }
 
 public extension Connection {
