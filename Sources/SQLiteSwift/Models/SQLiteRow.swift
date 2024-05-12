@@ -7,7 +7,7 @@ import Foundation
 ///
 /// It also conforms to `ExpressibleByArrayLiteral` and `ExpressibleByDictionaryLiteral`,
 /// allowing initialization with array or dictionary literals.
-public struct SQLiteRow: Collection, ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral {
+public struct SQLiteRow: Collection, ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral, CustomStringConvertible {
     /// Alias for the type representing a column name in an SQLite database.
     public typealias Column = String
     
@@ -24,6 +24,11 @@ public struct SQLiteRow: Collection, ExpressibleByArrayLiteral, ExpressibleByDic
     
     /// Array containing the column-value pairs of the row.
     private var elements: [Element]
+    
+    /// An array containing the column names in the row.
+    public var columns: [Column] {
+        elements.map { $0.column }
+    }
     
     /// The number of column-value pairs in the row.
     ///
@@ -51,6 +56,32 @@ public struct SQLiteRow: Collection, ExpressibleByArrayLiteral, ExpressibleByDic
     /// - Complexity: O(1)
     public var endIndex: Index {
         elements.endIndex
+    }
+    
+    /// A textual representation of the `SQLiteRow`.
+    ///
+    /// This property provides a textual representation of the `SQLiteRow` instance,
+    /// presenting its column-value pairs in a human-readable format. The format
+    /// consists of a comma-separated list of column-value pairs enclosed in square
+    /// brackets. Each pair is represented as `column: value`, where `column` is
+    /// the name of the column and `value` is its corresponding SQLiteValue.
+    ///
+    /// Example:
+    /// ```
+    /// let row: SQLiteRow = [
+    ///     ("ID", .int(1)),
+    ///     ("Name", .text("John"))
+    /// ]
+    /// print(row.description) // Prints: [(ID: Int(1)), (Name: Text("John"))]
+    /// ```
+    ///
+    /// The textual representation preserves the order of column-value pairs as they
+    /// were originally stored in the `SQLiteRow`. If the row is empty, the description
+    /// will be an empty array `[]`.
+    ///
+    /// - Complexity: O(*n*), where *n* is the number of column-value pairs in the row.
+    public var description: String {
+        elements.description
     }
     
     // MARK: - Inits

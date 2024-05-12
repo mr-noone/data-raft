@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents a value that can be stored in an SQLite database.
-public enum SQLiteValue {
+public enum SQLiteValue: Equatable {
     /// Represents an integer value.
     /// - Parameter value: The integer value.
     case int(Int64)
@@ -20,6 +20,13 @@ public enum SQLiteValue {
     
     /// Represents a NULL value.
     case null
+}
+
+extension SQLiteValue: CustomStringConvertible {
+    /// A string representation of the SQLite value.
+    public var description: String {
+        sqliteLiteral
+    }
 }
 
 extension SQLiteValue {
