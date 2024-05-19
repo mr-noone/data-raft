@@ -49,7 +49,44 @@ func sqlite3_column_blob(_ stmt: OpaquePointer!, _ iCol: Int32) -> Data {
 }
 
 /// The `Statement` class represents a prepared SQL statement in SQLite.
-public final class Statement {
+///
+/// ## Topics
+///
+/// ### Subtypes
+///
+/// - ``Options``
+///
+/// ### Binding Parameters
+///
+/// - ``bindParameterCount()``
+/// - ``bind(parameterIndexBy:)-3u2n7``
+/// - ``bind(parameterIndexBy:)-3b92l``
+/// - ``bind(parameterNameBy:)``
+/// - ``bind(nullAt:)``
+/// - ``bind(_:at:)-9nhpf``
+/// - ``bind(_:at:)-8owa4``
+/// - ``bind(_:at:)-5fdre``
+/// - ``bind(_:)``
+/// - ``clearBindings()``
+///
+/// ### Getting Results
+///
+/// - ``columnCount()``
+/// - ``columnType(at:)``
+/// - ``columnName(at:)``
+/// - ``columnValue(at:)-4zsq3``
+/// - ``columnValue(at:)-6nclp``
+/// - ``rowValue()``
+///
+/// ### Evaluating
+///
+/// - ``step()``
+/// - ``reset()``
+///
+/// ### Hashing
+///
+/// - ``hash(into:)``
+public final class Statement: Equatable, Hashable {
     // MARK: - Private properties
     
     /// The opaque pointer to the SQLite statement.
@@ -299,5 +336,27 @@ public final class Statement {
         if sqlite3_reset(statement) != SQLITE_OK {
             throw SQLiteError(connection)
         }
+    }
+    
+    // MARK: - Equatable
+    
+    /// Checks if two Statement instances are equal.
+    ///
+    /// - Parameters:
+    ///   - lhs: The left-hand side Statement instance to compare.
+    ///   - rhs: The right-hand side Statement instance to compare.
+    /// - Returns: True if the statements and connections are equal, otherwise false.
+    public static func == (lhs: Statement, rhs: Statement) -> Bool {
+        lhs.statement == rhs.statement && lhs.connection == rhs.connection
+    }
+    
+    // MARK: - Hashable
+    
+    /// Hashes the essential components of the Statement instance into a Hasher.
+    ///
+    /// - Parameter hasher: The hasher to use when combining the hash values.
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(statement)
+        hasher.combine(connection)
     }
 }
