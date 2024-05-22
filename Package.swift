@@ -57,7 +57,12 @@ let package = Package(
         ),
         .testTarget(
             name: "DataRaftTests",
-            dependencies: ["DataRaft"]
+            dependencies: ["DataRaft"],
+            resources: [
+                .copy("Resources/migration_1.sql"),
+                .copy("Resources/migration_2.sql"),
+                .copy("Resources/migration_3.sql")
+            ]
         )
     ]
 )
