@@ -19,6 +19,10 @@ let package = Package(
         .library(
             name: "DataRaft",
             targets: ["DataRaft"]
+        ),
+        .library(
+            name: "SQLiteSwift",
+            targets: ["SQLiteSwift"]
         )
     ],
     targets: [
@@ -37,6 +41,13 @@ let package = Package(
             name: "SQLiteSwift",
             dependencies: [
                 "SQLiteC"
+            ]
+        ),
+        .testTarget(
+            name: "SQLiteSwiftTests",
+            dependencies: ["SQLiteSwift"],
+            resources: [
+                .copy("Resources/sample_script.sql"),
             ]
         ),
         .target(

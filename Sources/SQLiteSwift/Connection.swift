@@ -629,6 +629,20 @@ public final class Connection {
         return try execute(sql: stmt, args: args)
     }
     
+    /// Executes SQL statements provided in a `SQLScript` instance.
+    ///
+    /// This function iterates over each SQL statement in the provided `SQLScript` instance
+    /// and executes them sequentially.
+    ///
+    /// - Parameter script: The `SQLScript` instance containing SQL statements to execute.
+    /// - Throws: An `SQLiteError` if there is an issue during statement execution.
+    public func execute(sql script: SQLScript) throws {
+        try script.forEach {
+            let stmt = try prepare(sql: $0)
+            try execute(sql: stmt, args: [])
+        }
+    }
+    
     /// Retrieves the value of the specified SQLite pragma.
     ///
     /// This function executes a PRAGMA query to retrieve the value of the specified pragma.
