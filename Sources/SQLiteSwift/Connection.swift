@@ -155,36 +155,36 @@ private func rollbackHookCallback(_ ctx: UnsafeMutableRawPointer?) {
 /// - ``isAutocommit``
 /// - ``isReadonly``
 ///
-/// ### Initialize SQLite library
+/// ### Initialize SQLite Library
 ///
 /// - ``initialize()``
 /// - ``shutdown()``
 ///
-/// ### Manage custom SQL functions
+/// ### Manage Custom SQL Functions
 ///
 /// - ``add(function:)-5c0qi``
 /// - ``add(function:)-5c09h``
 /// - ``remove(function:)``
 ///
-/// ### Preparing SQL statement
+/// ### Preparing SQL Statement
 ///
 /// - ``prepare(sql:options:)``
 ///
-/// ### Executing prepared statements
+/// ### Executing Prepared Statements
 ///
 /// - ``execute(sql:args:)-27hfb``
 /// - ``execute(sql:args:)-8c4zt``
 /// - ``execute(sql:args:)-71pca``
 /// - ``execute(sql:args:)-46pp6``
 ///
-/// ### Executing SQL queries
+/// ### Executing SQL Queries
 ///
 /// - ``execute(sql:args:)-4stt2``
 /// - ``execute(sql:args:)-6axx8``
 /// - ``execute(sql:args:)-448yo``
 /// - ``execute(sql:args:)-1ei0r``
 ///
-/// ### Executing PRAGMA queries
+/// ### Executing PRAGMA Queries
 ///
 /// - ``journalMode``
 /// - ``foreignKeys``
@@ -192,6 +192,12 @@ private func rollbackHookCallback(_ ctx: UnsafeMutableRawPointer?) {
 ///
 /// - ``get(pragma:)``
 /// - ``set(pragma:value:)``
+///
+/// ### Transaction Methods
+///
+/// - ``beginTransaction(_:)``
+/// - ``commitTransaction()``
+/// - ``rollbackTransaction()``
 public final class Connection {
     // MARK: - Public properties
     
@@ -646,5 +652,27 @@ public final class Connection {
     @discardableResult
     public func set<T>(pragma: SQLitePragma, value: T) throws -> T? where T: SQLiteConvertible {
         try execute(sql: "PRAGMA \(pragma) = \(value.sqliteLiteral)")
+    }
+    
+    /// Begins a transaction with the specified transaction type.
+    ///
+    /// - Parameter type: The type of transaction to begin. Defaults to deferred.
+    /// - Throws: An `SQLiteError` if the transaction cannot be initiated.
+    public func beginTransaction(_ type: SQLiteTransactionType = .deferred) throws {
+        try execute(sql: "BEGIN \(type) TRANSACTION", args: [])
+    }
+
+    /// Commits the current transaction.
+    ///
+    /// - Throws: An `SQLiteError` if the transaction cannot be committed.
+    public func commitTransaction() throws {
+        try execute(sql: "COMMIT TRANSACTION", args: [])
+    }
+
+    /// Rolls back the current transaction.
+    ///
+    /// - Throws: An `SQLiteError` if the transaction cannot be rolled back.
+    public func rollbackTransaction() throws {
+        try execute(sql: "ROLLBACK TRANSACTION", args: [])
     }
 }
