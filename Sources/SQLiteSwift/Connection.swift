@@ -172,17 +172,21 @@ private func rollbackHookCallback(_ ctx: UnsafeMutableRawPointer?) {
 ///
 /// ### Executing Prepared Statements
 ///
-/// - ``execute(sql:args:)-27hfb``
-/// - ``execute(sql:args:)-8c4zt``
-/// - ``execute(sql:args:)-71pca``
-/// - ``execute(sql:args:)-46pp6``
+/// - ``execute(sql:args:)-3m0g2``
+/// - ``execute(sql:args:)-7z488``
+/// - ``execute(sql:args:)-5wmqj``
+/// - ``execute(sql:args:)-2h5tu``
 ///
 /// ### Executing SQL Queries
 ///
-/// - ``execute(sql:args:)-4stt2``
-/// - ``execute(sql:args:)-6axx8``
-/// - ``execute(sql:args:)-448yo``
-/// - ``execute(sql:args:)-1ei0r``
+/// - ``execute(sql:args:)-4g5v8``
+/// - ``execute(sql:args:)-5kkea``
+/// - ``execute(sql:args:)-5vpki``
+/// - ``execute(sql:args:)-86eyf``
+///
+/// ### Executing SQL Script
+///
+/// - ``execute(sql:)``
 ///
 /// ### Executing PRAGMA Queries
 ///
@@ -454,13 +458,13 @@ public final class Connection {
     ///
     /// - Parameters:
     ///   - statement: The `Statement` instance to execute.
-    ///   - args: An optional array of `SQLiteArguments` to bind to the statement.
+    ///   - args: An optional array of `Arguments` to bind to the statement.
     /// - Returns: An array of `SQLiteRow` representing the result set.
     /// - Throws: An `SQLiteError` if there is an issue during statement execution.
     @discardableResult
     public func execute(
         sql statement: Statement,
-        args: [SQLiteArguments]? = nil
+        args: [Statement.Arguments]? = nil
     ) throws -> [SQLiteRow] {
         var result = [SQLiteRow]()
         var argIndex = 0
@@ -488,14 +492,14 @@ public final class Connection {
     ///
     /// - Parameters:
     ///   - statement: The `Statement` instance to execute.
-    ///   - args: An optional `SQLiteArguments` to bind to the statement.
+    ///   - args: An optional `Arguments` to bind to the statement.
     /// - Returns: A single `SQLiteRow` representing the first row of the result set,
     ///   or `nil` if there are no rows.
     /// - Throws: An `SQLiteError` if there is an issue during statement execution.
     @discardableResult
     public func execute(
         sql statement: Statement,
-        args: SQLiteArguments? = nil
+        args: Statement.Arguments? = nil
     ) throws -> SQLiteRow? {
         var result: SQLiteRow?
         if let args = args {
@@ -517,13 +521,13 @@ public final class Connection {
     ///
     /// - Parameters:
     ///   - statement: The `Statement` instance to execute.
-    ///   - args: The `SQLiteArguments` to bind to the statement.
+    ///   - args: The `Arguments` to bind to the statement.
     /// - Returns: An array of `SQLiteRow` representing the result set.
     /// - Throws: An `SQLiteError` if there is an issue during statement execution.
     @discardableResult
     public func execute(
         sql statement: Statement,
-        args: SQLiteArguments
+        args: Statement.Arguments
     ) throws -> [SQLiteRow] {
         try execute(sql: statement, args: [args])
     }
@@ -536,13 +540,13 @@ public final class Connection {
     ///
     /// - Parameters:
     ///   - statement: The `Statement` instance to execute.
-    ///   - args: An optional `SQLiteArguments` to bind to the statement.
+    ///   - args: An optional `Arguments` to bind to the statement.
     /// - Returns: A single value of type `T`, representing the result of the query, or `nil` if the result set is empty.
     /// - Throws: An `SQLiteError` if there is an issue during statement execution.
     @discardableResult
     public func execute<T>(
         sql statement: Statement,
-        args: SQLiteArguments? = nil
+        args: Statement.Arguments? = nil
     ) throws -> T? where T: SQLiteConvertible {
         let row = try execute(sql: statement, args: args)
         return T(row?.first?.value ?? .null)
@@ -555,13 +559,13 @@ public final class Connection {
     ///
     /// - Parameters:
     ///   - query: The SQL query string to execute.
-    ///   - args: An optional array of `SQLiteArguments` to bind to the query.
+    ///   - args: An optional array of `Arguments` to bind to the query.
     /// - Returns: An array of `SQLiteRow` representing the result set.
     /// - Throws: An `SQLiteError` if there is an issue during query execution.
     @discardableResult
     public func execute(
         sql query: String,
-        args: [SQLiteArguments]? = nil
+        args: [Statement.Arguments]? = nil
     ) throws -> [SQLiteRow] {
         let stmt = try prepare(sql: query)
         return try execute(sql: stmt, args: args)
@@ -575,14 +579,14 @@ public final class Connection {
     ///
     /// - Parameters:
     ///   - query: The SQL query string to execute.
-    ///   - args: An optional `SQLiteArguments` to bind to the query.
+    ///   - args: An optional `Arguments` to bind to the query.
     /// - Returns: A single `SQLiteRow` representing the first row of the result set,
     ///   or `nil` if there are no rows.
     /// - Throws: An `SQLiteError` if there is an issue during query execution.
     @discardableResult
     public func execute(
         sql query: String,
-        args: SQLiteArguments? = nil
+        args: Statement.Arguments? = nil
     ) throws -> SQLiteRow? {
         let stmt = try prepare(sql: query)
         return try execute(sql: stmt, args: args)
@@ -596,13 +600,13 @@ public final class Connection {
     ///
     /// - Parameters:
     ///   - query: The SQL query string to execute.
-    ///   - args: The `SQLiteArguments` to bind to the query.
+    ///   - args: The `Arguments` to bind to the query.
     /// - Returns: An array of `SQLiteRow` representing the result set.
     /// - Throws: An `SQLiteError` if there is an issue during query execution.
     @discardableResult
     public func execute(
         sql query: String,
-        args: SQLiteArguments
+        args: Statement.Arguments
     ) throws -> [SQLiteRow] {
         let stmt = try prepare(sql: query)
         return try execute(sql: stmt, args: args)
@@ -616,14 +620,14 @@ public final class Connection {
     ///
     /// - Parameters:
     ///   - query: The SQL query string to execute.
-    ///   - args: An optional array of `SQLiteArguments` to bind to the query.
+    ///   - args: An optional array of `Arguments` to bind to the query.
     /// - Returns: A single value of type `T`, representing the result of the query,
     ///   or `nil` if the result set is empty.
     /// - Throws: An `SQLiteError` if there is an issue during query execution.
     @discardableResult
     public func execute<T>(
         sql query: String,
-        args: SQLiteArguments? = nil
+        args: Statement.Arguments? = nil
     ) throws -> T? where T: SQLiteConvertible {
         let stmt = try prepare(sql: query)
         return try execute(sql: stmt, args: args)

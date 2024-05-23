@@ -8,10 +8,3 @@ public protocol SQLiteConvertible: SQLiteBindable {
     /// - Parameter sqliteValue: The SQL value.
     init?(_ sqliteValue: SQLiteValue)
 }
-
-extension SQLiteConvertible {
-    /// Returns a string literal representation of the SQLite convertible value.
-    var sqliteLiteral: String {
-        sqliteValue.sqliteLiteral
-    }
-}
