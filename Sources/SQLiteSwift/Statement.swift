@@ -55,16 +55,17 @@ func sqlite3_column_blob(_ stmt: OpaquePointer!, _ iCol: Int32) -> Data {
 /// ### Subtypes
 ///
 /// - ``Options``
+/// - ``Arguments``
 ///
 /// ### Binding Parameters
 ///
 /// - ``bindParameterCount()``
 /// - ``bind(parameterIndexBy:)-3u2n7``
-/// - ``bind(parameterIndexBy:)-3b92l``
+/// - ``bind(parameterIndexBy:)-5octg``
 /// - ``bind(parameterNameBy:)``
 /// - ``bind(nullAt:)``
 /// - ``bind(_:at:)-9nhpf``
-/// - ``bind(_:at:)-8owa4``
+/// - ``bind(_:at:)-19ccu``
 /// - ``bind(_:at:)-5fdre``
 /// - ``bind(_:)``
 /// - ``clearBindings()``
@@ -141,7 +142,7 @@ public final class Statement: Equatable, Hashable {
     /// Returns the parameter index for the given token in the prepared SQL statement.
     ///
     /// This method translates the token representing either an indexed or named parameter from the
-    /// `SQLiteArguments.Token` enumeration into the corresponding index in the prepared SQL statement.
+    /// `Arguments.Token` enumeration into the corresponding index in the prepared SQL statement.
     ///
     /// If the token is indexed, the method directly returns the index.
     /// If the token is named, the method delegates the retrieval of the index to the `bind(parameterIndexBy:)`
@@ -149,12 +150,12 @@ public final class Statement: Equatable, Hashable {
     ///
     /// - Parameter token: The token representing either an indexed or named parameter.
     /// - Returns: The index of the parameter in the prepared SQL statement.
-    public func bind(parameterIndexBy token: SQLiteArguments.Token) -> Int32 {
+    public func bind(parameterIndexBy token: Arguments.Token) -> Int32 {
         switch token {
         case .indexed(let index):
             return Int32(index)
         case .named(let name):
-            return bind(parameterIndexBy: name)
+            return bind(parameterIndexBy: ":\(name)")
         }
     }
     
@@ -203,7 +204,7 @@ public final class Statement: Equatable, Hashable {
     ///
     /// This method binds the specified SQLite value to the parameter in the prepared SQL statement.
     /// It uses the provided token, which represents either an indexed or named parameter from the
-    /// `SQLiteArguments.Token` enumeration, to determine the parameter's index.
+    /// `Arguments.Token` enumeration, to determine the parameter's index.
     ///
     /// The method first retrieves the index using the `bind(parameterIndexBy:)` method with the provided token.
     /// Then, it delegates the actual binding operation to the `bind(_:at:)` method, passing the retrieved
@@ -213,7 +214,7 @@ public final class Statement: Equatable, Hashable {
     ///   - value: The SQLite value to bind to the parameter.
     ///   - token: The token representing either an indexed or named parameter.
     /// - Throws: An `SQLiteError` if the value cannot be bound to the parameter.
-    public func bind(_ value: SQLiteValue, at token: SQLiteArguments.Token) throws {
+    public func bind(_ value: SQLiteValue, at token: Arguments.Token) throws {
         try bind(value, at: bind(parameterIndexBy: token))
     }
     
@@ -227,16 +228,16 @@ public final class Statement: Equatable, Hashable {
         try bind(value.sqliteValue, at: index)
     }
     
-    /// Binds values from the provided SQLiteArguments instance to parameters in the prepared SQL statement.
+    /// Binds values from the provided Arguments instance to parameters in the prepared SQL statement.
     ///
-    /// This method iterates over the tokens and corresponding values in the given SQLiteArguments instance.
+    /// This method iterates over the tokens and corresponding values in the given Arguments instance.
     /// For each token-value pair, it attempts to bind the value to the parameter in the prepared SQL statement.
     /// The binding operation is performed using the `bind(_:at:)` method, passing the token to determine
     /// the parameter's index.
     ///
-    /// - Parameter args: An SQLiteArguments instance containing tokens and corresponding values to bind.
+    /// - Parameter args: An Arguments instance containing tokens and corresponding values to bind.
     /// - Throws: An `SQLiteError` if any value cannot be bound to its parameter.
-    public func bind(_ args: SQLiteArguments) throws {
+    public func bind(_ args: Arguments) throws {
         try args.forEach { token, value in
             try bind(value, at: token)
         }
