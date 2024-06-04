@@ -190,10 +190,10 @@ private func rollbackHookCallback(_ ctx: UnsafeMutableRawPointer?) {
 ///
 /// ### Executing PRAGMA Queries
 ///
-/// - ``foreign_keys``
-/// - ``journal_mode``
+/// - ``foreignKeys``
+/// - ``journalMode``
 /// - ``synchronous``
-/// - ``user_version``
+/// - ``userVersion``
 ///
 /// - ``get(pragma:)``
 /// - ``set(pragma:value:)``
