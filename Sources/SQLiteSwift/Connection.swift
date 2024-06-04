@@ -190,9 +190,10 @@ private func rollbackHookCallback(_ ctx: UnsafeMutableRawPointer?) {
 ///
 /// ### Executing PRAGMA Queries
 ///
-/// - ``journalMode``
-/// - ``foreignKeys``
-/// - ``userVersion``
+/// - ``foreign_keys``
+/// - ``journal_mode``
+/// - ``synchronous``
+/// - ``user_version``
 ///
 /// - ``get(pragma:)``
 /// - ``set(pragma:value:)``
@@ -257,6 +258,15 @@ public final class Connection {
         didSet { sqlite3_busy_timeout(connection, busyTimeout) }
     }
     
+    /// Represents the foreign keys setting for the SQLite database.
+    ///
+    /// Accessing this property reads or sets the foreign keys enforcement status for the SQLite database.
+    /// Enabling foreign keys ensures referential integrity between tables.
+    public var foreignKeys: Bool {
+        get { try! get(pragma: .foreignKeys) ?? false }
+        set { try! set(pragma: .foreignKeys, value: newValue) }
+    }
+    
     /// Represents the journal mode setting for the SQLite database.
     ///
     /// Accessing this property reads or sets the journal mode for the SQLite database.
@@ -266,13 +276,13 @@ public final class Connection {
         set { try! set(pragma: .journalMode, value: newValue) }
     }
     
-    /// Represents the foreign keys setting for the SQLite database.
+    /// Represents the synchronous setting for the SQLite database.
     ///
-    /// Accessing this property reads or sets the foreign keys enforcement status for the SQLite database.
-    /// Enabling foreign keys ensures referential integrity between tables.
-    public var foreignKeys: Bool {
-        get { try! get(pragma: .foreignKeys) ?? false }
-        set { try! set(pragma: .foreignKeys, value: newValue) }
+    /// Accessing this property reads or sets the synchronous mode for the SQLite database.
+    /// The synchronous mode determines how transactions are synchronized to disk.
+    public var synchronous: SQLiteSynchronous {
+        get { try! get(pragma: .synchronous) ?? .off }
+        set { try! set(pragma: .synchronous, value: newValue) }
     }
     
     /// Represents the user version number of the SQLite database.
@@ -679,14 +689,14 @@ public final class Connection {
     public func beginTransaction(_ type: SQLiteTransactionType = .deferred) throws {
         try execute(sql: "BEGIN \(type) TRANSACTION", args: [])
     }
-
+    
     /// Commits the current transaction.
     ///
     /// - Throws: An `SQLiteError` if the transaction cannot be committed.
     public func commitTransaction() throws {
         try execute(sql: "COMMIT TRANSACTION", args: [])
     }
-
+    
     /// Rolls back the current transaction.
     ///
     /// - Throws: An `SQLiteError` if the transaction cannot be rolled back.

@@ -10,7 +10,7 @@ import SQLiteSwift
 /// Example usage:
 /// ```swift
 /// // Create a MigrationService instance
-/// let migrationService = MigrationService()
+/// let migrationService = MigrationService(connection: connection)
 ///
 /// // Define migrations
 /// let migration1 = Migration(version: 1, byResource: "migration_1", extension: "sql")!
@@ -46,7 +46,7 @@ public final class MigrationService: DatabaseService {
     
     private var migrations = Set<Migration>()
     
-    // MARK: - Inits
+    // MARK: - Methods
     
     /// Adds a migration to the service.
     ///
