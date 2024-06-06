@@ -231,12 +231,15 @@ public final class Function: Hashable {
         }
     }
     
-    /// Destroys the custom SQLite function.
+    // MARK: - Methods
+    
+    /// Unregister the custom function from the SQLite database connection.
     ///
-    /// When an instance of `Function` is deallocated, this method is called to
-    /// unregister the custom function from the SQLite database connection.
-    /// If an error occurs during deregistration, a fatal error is raised.
-    deinit {
+    /// This function unregisters the custom SQLite function identified by its name and number of arguments.
+    /// It is typically used to remove a custom function that was previously installed.
+    ///
+    /// - Throws: An `SQLiteError` if an error occurs during the uninstallation process.
+    func uninstall() throws {
         let status = sqlite3_create_function_v2(
             connection,
             definition.name,
@@ -245,11 +248,9 @@ public final class Function: Hashable {
             nil, nil, nil, nil, nil
         )
         if status != SQLITE_OK {
-            fatalError(SQLiteError(connection).localizedDescription)
+            throw SQLiteError(connection)
         }
     }
-    
-    // MARK: - Methods
     
     /// Checks if the current SQLite function instance contains the specified definition type.
     ///
