@@ -415,7 +415,7 @@ public final class Connection {
         }
     }
     
-    /// Creates and adds a new scalar function to the SQLite connection.
+    /// Adds a new scalar function to the SQLite connection.
     ///
     /// This method creates an instance of the `Function` class for the specified scalar function definition
     /// type and inserts it into the set of user-defined SQLite functions associated with the connection.
@@ -423,10 +423,14 @@ public final class Connection {
     /// - Parameter definition: The type of scalar function definition.
     /// - Throws: An `SQLiteError` if the creation of the function fails.
     public func add(function definition: Function.Scalar.Type) throws {
+        guard !functions.contains(where: { $0.contains(definition) }) else { return }
         try functions.insert(Function(db: connection, definition: definition))
     }
     
-    /// Creates and adds a new aggregate function to the SQLite connection.
+    /// Adds a new aggregate function to the SQLite connection.
+    ///
+    /// This method instantiates the `Function` class for the given aggregate function definition
+    /// type and adds it to the set of user-defined SQLite functions linked with the connection.
     ///
     /// - Parameter definition: The type of aggregate function definition.
     /// - Throws: An `SQLiteError` if the creation of the function fails.
@@ -437,9 +441,17 @@ public final class Connection {
     
     /// Removes a user-defined function from the SQLite connection.
     ///
-    /// - Parameter definition: The type of function definition to remove.
-    public func remove(function definition: Function.Definition.Type) {
-        functions.removeAll { $0.contains(definition) }
+    /// This method removes the specified type of function from the set of user-defined SQLite functions
+    /// associated with the connection. It throws an `SQLiteError` if the removal of the function fails.
+    ///
+    /// - Parameter definition: The type of function definition to be removed.
+    /// - Throws: An `SQLiteError` if the removal of the function fails.
+    public func remove(function definition: Function.Definition.Type) throws {
+        guard let function = functions.first(
+            where: { $0.contains(definition) }
+        ) else { return }
+        try function.uninstall()
+        functions.remove(function)
     }
     
     /// Prepares a new SQLite statement with the provided SQL query and options.
