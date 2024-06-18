@@ -52,8 +52,7 @@ let package = Package(
         ),
         .target(
             name: "DataRaft",
-            dependencies: ["SQLiteSwift"],
-            exclude: ["Deprecated"]
+            dependencies: ["SQLiteSwift"]
         ),
         .testTarget(
             name: "DataRaftTests",
