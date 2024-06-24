@@ -1,48 +1,66 @@
 import Foundation
 
-/// A collection of SQL statements parsed from a file.
+/// A collection of SQL statements parsed from a file or string.
 ///
-/// This struct represents a collection of SQL statements extracted from a file.
-/// It provides functionality to load SQL statements from a resource file,
-/// remove comments and whitespace, and access individual statements in the collection.
+/// This struct represents a collection of SQL statements extracted from a file or string input.
+/// It provides functionality to load SQL statements, remove comments and whitespace,
+/// and access individual statements in the collection.
 ///
-/// To use `SQLScript`, you can initialize an instance by providing either the URL of the file
-/// containing SQL statements or by specifying the name of the resource file along with the optional
-/// file extension and bundle from which to load the file.
+/// ## Example Usage
 ///
-/// Once initialized, you can access individual SQL statements by index or iterate over them using `for...in` loops.
-/// For example:
+/// To use `SQLScript`, you can initialize an instance by providing either the URL of a file
+/// containing SQL statements or by directly passing a string containing SQL statements:
 ///
 /// ```swift
 /// // Load SQL script from a file named "sample_script.sql" in the main bundle.
-/// if let sqlScript = try? SQLScript(byResource: "sample_script", extension: "sql") {
-///     // Iterate over each SQL statement in the script.
+/// do {
+///     guard let sqlScript = try SQLScript(
+///         byResource: "sample_script",
+///         extension: "sql"
+///     ) else {
+///         throw NSError(domain: "SomeDomain", code: -1)
+///     }
 ///     for (index, statement) in sqlScript.enumerated() {
 ///         print("Statement \(index + 1):")
 ///         print(statement)
 ///         print("--------------------")
 ///     }
-/// } else {
-///     print("Failed to load SQL script.")
+/// } catch {
+///     print(error)
 /// }
 /// ```
 ///
-/// In the above example:
-/// - We attempt to initialize a `SQLScript` instance by loading SQL statements from a file named
-///   "sample_script.sql" in the main bundle.
-/// - If the initialization succeeds, we iterate over each SQL statement in the script using `enumerated()`
-///   to get both the index and the statement itself.
-/// - For each statement, we print its index, the statement itself, and a separator.
-/// - If the initialization fails (e.g., due to the file not being found or an error occurred during parsing),
-///   we print a failure message.
+/// ```swift
+/// // Initialize SQL script from a string directly.
+/// do {
+///     let sqlString = """
+///     CREATE TABLE users (
+///         id INTEGER PRIMARY KEY,
+///         username TEXT NOT NULL,
+///         email TEXT NOT NULL
+///     );
+///     INSERT INTO users (id, username, email)
+///     VALUES (1, 'john_doe', 'john@example.com');
+///     """
+///     let sqlScript = try SQLScript(string: sqlString)
+/// } catch {
+///     print(error)
+/// }
+/// ```
 ///
-/// - Note: This struct assumes that SQL statements in the file are separated by semicolons (;)
-///         and supports multi-line SQL statements.
-/// - Note: The struct supports both single-line (`--`) and multi-line (`/* */`) comments in SQL files.
-/// - Warning: This struct does not support nested block comments in SQL files.
+/// - Note: Ensure that the file or string input follows the expected format
+///         (semicolons between statements, correct comment syntax).
+/// - Note: Error handling is critical, especially during initialization and parsing stages.
+///
+/// ## File Format
+///
+/// - This struct assumes that SQL statements in a file or string are separated by semicolons (`;`)
+///   and supports multi-line SQL statements.
+/// - It supports both single-line (`--`) and multi-line (`/* */`) comments in SQL files or strings.
+///
+/// - Warning: Nested block comments in SQL files or strings are not supported.
 ///
 /// Example SQL file content (`sample_script.sql`):
-///
 /// ```SQL
 /// -- This is a single-line comment.
 /// CREATE TABLE users (
@@ -92,9 +110,9 @@ public struct SQLScript: Collection {
         elements.isEmpty
     }
     
-    // MARK: - Initialization
+    // MARK: - Inits
     
-    /// Initializes a `SQLScript` instance by loading SQL statements from a file.
+    /// Initializes a `SQLScript` instance by loading SQL statements from a resource file.
     ///
     /// - Parameters:
     ///   - name: The name of the resource file containing SQL statements.
@@ -118,7 +136,14 @@ public struct SQLScript: Collection {
     /// - Parameter url: The URL of the file containing SQL statements.
     /// - Throws: An error if the file cannot be loaded or parsed.
     public init(contentsOf url: URL) throws {
-        let string = try String(contentsOf: url, encoding: .utf8)
+        try self.init(string: .init(contentsOf: url, encoding: .utf8))
+    }
+    
+    /// Initializes a `SQLScript` instance by parsing SQL statements from a string.
+    ///
+    /// - Parameter string: The string containing SQL statements.
+    /// - Throws: An error if the string cannot be parsed correctly.
+    public init(string: String) throws {
         let comments = "--.*|\\/\\*(?:.|\\n)*?\\*\\/"
         let emptyLines = "^\\s\\n|\\s+(?=(?:\\n|$))"
         let statements = "\\w(?:.|\\n)*?(?:(?=;|\\z))"

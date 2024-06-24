@@ -7,8 +7,10 @@ extension OrderBy {
         
         /// The name of the column to sort by.
         public let column: String
+        
         /// The sort order for the column.
         public let sortOrder: SortOrder?
+        
         /// The placement of NULL values for the column.
         public let nullPlacement: NullPlacement?
         
@@ -43,6 +45,24 @@ extension OrderBy {
             self.column = column.trimmingCharacters(in: .whitespacesAndNewlines)
             self.sortOrder = sortOrder
             self.nullPlacement = nullPlacement
+        }
+        
+        /// Creates a sort descriptor using a coding key.
+        ///
+        /// - Parameters:
+        ///   - key: The coding key representing the column name.
+        ///   - sortOrder: The sort order for the column. Default is `nil`.
+        ///   - nullPlacement: The placement of NULL values for the column. Default is `nil`.
+        public init<C: CodingKey>(
+            column key: C,
+            sortOrder: SortOrder? = nil,
+            nullPlacement: NullPlacement? = nil
+        ) {
+            self.init(
+                column: key.stringValue,
+                sortOrder: sortOrder,
+                nullPlacement: nullPlacement
+            )
         }
     }
 }
