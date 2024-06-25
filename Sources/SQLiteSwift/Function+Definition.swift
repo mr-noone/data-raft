@@ -7,11 +7,11 @@ extension Function {
     /// This protocol defines the basic attributes required for implementing SQLite user-defined functions,
     /// such as function name, number of arguments, and options.
     public protocol Definition {
-        /// The name of the function.
-        static var name: String { get }
-        
         /// The number of arguments of the function.
         static var argc: Int32 { get }
+        
+        /// The name of the function.
+        static var name: String { get }
         
         /// The options of the function.
         static var options: Options { get }
