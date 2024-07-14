@@ -12,9 +12,9 @@ extension Statement {
     /// There are two types of tokens:
     ///
     /// - Indexed Tokens: Represented by numerical indices (`?NNNN`, `?`).
-    /// These placeholders correspond to specific parameter positions.
+    ///   These placeholders correspond to specific parameter positions.
     /// - Named Tokens: Represented by string names (`:AAAA`, `@AAAA`, `$AAAA`).
-    /// These placeholders are identified by unique names.
+    ///   These placeholders are identified by unique names.
     ///
     /// More information on SQLite parameters can be found [here](https://www.sqlite.org/lang_expr.html#varparam).
     /// The `Arguments` structure supports indexed (?) and named (:AAAA) forms of tokens.
