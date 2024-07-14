@@ -102,7 +102,7 @@ public final class ModelService: DatabaseService {
         let predicate = Predicate(expression: "\(M.idKey) = ?", id)
         return try select(predicate, limit: 1).first
     }
-
+    
     /// Counts the number of models in the database based on the specified criteria.
     ///
     /// This method retrieves the count of models from the database table associated with the specified model type.

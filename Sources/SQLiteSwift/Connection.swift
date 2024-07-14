@@ -7,129 +7,6 @@ let SQLITE_STATIC = unsafeBitCast(OpaquePointer(bitPattern: 0), to: sqlite3_dest
 /// A value representing a transient destructor for SQLite.
 let SQLITE_TRANSIENT = unsafeBitCast(OpaquePointer(bitPattern: -1), to: sqlite3_destructor_type.self)
 
-/// Callback function for tracing SQL statements.
-///
-/// This function is used as a callback for tracing SQL statements executed by SQLite.
-/// It extracts the SQL statement being executed in both unexpanded and expanded
-/// forms and notifies the connection delegate if available.
-///
-/// - Parameters:
-///   - flag: The tracing flag.
-///   - ctx: A context pointer.
-///   - p: A pointer to the SQLite statement being executed.
-///   - x: A pointer to additional information.
-/// - Returns: An SQLite result code.
-private func traceCallback(
-    _ flag: UInt32,
-    _ ctx: UnsafeMutableRawPointer?,
-    _ p: UnsafeMutableRawPointer?,
-    _ x: UnsafeMutableRawPointer?
-) -> Int32 {
-    guard let ctx = ctx else { return SQLITE_OK }
-    let connection = Unmanaged<Connection>
-        .fromOpaque(ctx)
-        .takeUnretainedValue()
-    
-    if let delegate = connection.delegate {
-        guard let stmt = OpaquePointer(p),
-              let pSql = sqlite3_expanded_sql(stmt),
-              let xSql = x?.assumingMemoryBound(to: CChar.self)
-        else { return SQLITE_OK }
-        
-        let pSqlString = String(cString: pSql)
-        let xSqlString = String(cString: xSql)
-        let trace = (xSqlString, pSqlString)
-        delegate.connection(connection, trace: trace)
-    }
-    
-    return SQLITE_OK
-}
-
-/// Callback function for update notifications.
-///
-/// This function is used as a callback for update notifications triggered by SQLite.
-/// It notifies the connection delegate if available, providing information about the type of
-/// update action that occurred, including the database name, table name, and row ID.
-///
-/// - Parameters:
-///   - ctx: A context pointer.
-///   - action: The type of update action that occurred.
-///   - dName: The name of the affected database.
-///   - tName: The name of the affected table.
-///   - rowID: The row ID of the affected row.
-private func updateHookCallback(
-    _ ctx: UnsafeMutableRawPointer?,
-    _ action: Int32,
-    _ dName: UnsafePointer<CChar>?,
-    _ tName: UnsafePointer<CChar>?,
-    _ rowID: sqlite3_int64
-) {
-    guard let ctx = ctx else { return }
-    let connection = Unmanaged<Connection>
-        .fromOpaque(ctx)
-        .takeUnretainedValue()
-    
-    if let delegate = connection.delegate {
-        guard let dName = dName, let tName = tName else { return }
-        
-        let dbName = String(cString: dName)
-        let tableName = String(cString: tName)
-        let updateAction: SQLiteAction
-        
-        switch action {
-        case SQLITE_INSERT:
-            updateAction = .insert(db: dbName, table: tableName, rowID: rowID)
-        case SQLITE_UPDATE:
-            updateAction = .update(db: dbName, table: tableName, rowID: rowID)
-        case SQLITE_DELETE:
-            updateAction = .delete(db: dbName, table: tableName, rowID: rowID)
-        default:
-            return
-        }
-        
-        delegate.connection(connection, didUpdate: updateAction)
-    }
-}
-
-/// Callback function for committing transactions.
-///
-/// This function is used as a callback for committing transactions in SQLite.
-/// It notifies the connection delegate if available that a transaction has been successfully committed.
-/// If the delegate throws an error during the commit process, the COMMIT operation is converted into a ROLLBACK.
-///
-/// - Parameter ctx: A context pointer.
-/// - Returns: An SQLite result code indicating the status of the commit operation.
-private func commitHookCallback(_ ctx: UnsafeMutableRawPointer?) -> Int32 {
-    do {
-        guard let ctx = ctx else { return SQLITE_OK }
-        let connection = Unmanaged<Connection>
-            .fromOpaque(ctx)
-            .takeUnretainedValue()
-        if let delegate = connection.delegate {
-            try delegate.connectionDidCommit(connection)
-        }
-        return SQLITE_OK
-    } catch {
-        return SQLITE_ERROR
-    }
-}
-
-/// Callback function for rolling back transactions.
-///
-/// This function is used as a callback for rolling back transactions in SQLite.
-/// It notifies the connection delegate if available that a transaction has been rolled back.
-///
-/// - Parameter ctx: A context pointer.
-private func rollbackHookCallback(_ ctx: UnsafeMutableRawPointer?) {
-    guard let ctx = ctx else { return }
-    let connection = Unmanaged<Connection>
-        .fromOpaque(ctx)
-        .takeUnretainedValue()
-    if let delegate = connection.delegate {
-        delegate.connectionDidRollback(connection)
-    }
-}
-
 /// The `Connection` class represents an object-oriented connection to a SQLite database.
 ///
 /// You can use this class to establish a connection to a SQLite database with the specified options.
@@ -714,5 +591,130 @@ public final class Connection {
     /// - Throws: An `SQLiteError` if the transaction cannot be rolled back.
     public func rollbackTransaction() throws {
         try execute(sql: "ROLLBACK TRANSACTION", args: [])
+    }
+}
+
+// MARK: - Functions
+
+/// Callback function for tracing SQL statements.
+///
+/// This function is used as a callback for tracing SQL statements executed by SQLite.
+/// It extracts the SQL statement being executed in both unexpanded and expanded
+/// forms and notifies the connection delegate if available.
+///
+/// - Parameters:
+///   - flag: The tracing flag.
+///   - ctx: A context pointer.
+///   - p: A pointer to the SQLite statement being executed.
+///   - x: A pointer to additional information.
+/// - Returns: An SQLite result code.
+private func traceCallback(
+    _ flag: UInt32,
+    _ ctx: UnsafeMutableRawPointer?,
+    _ p: UnsafeMutableRawPointer?,
+    _ x: UnsafeMutableRawPointer?
+) -> Int32 {
+    guard let ctx = ctx else { return SQLITE_OK }
+    let connection = Unmanaged<Connection>
+        .fromOpaque(ctx)
+        .takeUnretainedValue()
+    
+    if let delegate = connection.delegate {
+        guard let stmt = OpaquePointer(p),
+              let pSql = sqlite3_expanded_sql(stmt),
+              let xSql = x?.assumingMemoryBound(to: CChar.self)
+        else { return SQLITE_OK }
+        
+        let pSqlString = String(cString: pSql)
+        let xSqlString = String(cString: xSql)
+        let trace = (xSqlString, pSqlString)
+        delegate.connection(connection, trace: trace)
+    }
+    
+    return SQLITE_OK
+}
+
+/// Callback function for update notifications.
+///
+/// This function is used as a callback for update notifications triggered by SQLite.
+/// It notifies the connection delegate if available, providing information about the type of
+/// update action that occurred, including the database name, table name, and row ID.
+///
+/// - Parameters:
+///   - ctx: A context pointer.
+///   - action: The type of update action that occurred.
+///   - dName: The name of the affected database.
+///   - tName: The name of the affected table.
+///   - rowID: The row ID of the affected row.
+private func updateHookCallback(
+    _ ctx: UnsafeMutableRawPointer?,
+    _ action: Int32,
+    _ dName: UnsafePointer<CChar>?,
+    _ tName: UnsafePointer<CChar>?,
+    _ rowID: sqlite3_int64
+) {
+    guard let ctx = ctx else { return }
+    let connection = Unmanaged<Connection>
+        .fromOpaque(ctx)
+        .takeUnretainedValue()
+    
+    if let delegate = connection.delegate {
+        guard let dName = dName, let tName = tName else { return }
+        
+        let dbName = String(cString: dName)
+        let tableName = String(cString: tName)
+        let updateAction: SQLiteAction
+        
+        switch action {
+        case SQLITE_INSERT:
+            updateAction = .insert(db: dbName, table: tableName, rowID: rowID)
+        case SQLITE_UPDATE:
+            updateAction = .update(db: dbName, table: tableName, rowID: rowID)
+        case SQLITE_DELETE:
+            updateAction = .delete(db: dbName, table: tableName, rowID: rowID)
+        default:
+            return
+        }
+        
+        delegate.connection(connection, didUpdate: updateAction)
+    }
+}
+
+/// Callback function for committing transactions.
+///
+/// This function is used as a callback for committing transactions in SQLite.
+/// It notifies the connection delegate if available that a transaction has been successfully committed.
+/// If the delegate throws an error during the commit process, the COMMIT operation is converted into a ROLLBACK.
+///
+/// - Parameter ctx: A context pointer.
+/// - Returns: An SQLite result code indicating the status of the commit operation.
+private func commitHookCallback(_ ctx: UnsafeMutableRawPointer?) -> Int32 {
+    do {
+        guard let ctx = ctx else { return SQLITE_OK }
+        let connection = Unmanaged<Connection>
+            .fromOpaque(ctx)
+            .takeUnretainedValue()
+        if let delegate = connection.delegate {
+            try delegate.connectionDidCommit(connection)
+        }
+        return SQLITE_OK
+    } catch {
+        return SQLITE_ERROR
+    }
+}
+
+/// Callback function for rolling back transactions.
+///
+/// This function is used as a callback for rolling back transactions in SQLite.
+/// It notifies the connection delegate if available that a transaction has been rolled back.
+///
+/// - Parameter ctx: A context pointer.
+private func rollbackHookCallback(_ ctx: UnsafeMutableRawPointer?) {
+    guard let ctx = ctx else { return }
+    let connection = Unmanaged<Connection>
+        .fromOpaque(ctx)
+        .takeUnretainedValue()
+    if let delegate = connection.delegate {
+        delegate.connectionDidRollback(connection)
     }
 }

@@ -3,7 +3,7 @@ import Foundation
 /// Represents different types of database update actions.
 ///
 /// The `SQLiteAction` enum is used to identify the type of action
-/// performed on a database,such as insertion, updating, or deletion.
+/// performed on a database, such as insertion, updating, or deletion.
 public enum SQLiteAction {
     /// Indicates the insertion of a new row into a table.
     ///

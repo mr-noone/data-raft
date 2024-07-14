@@ -3,6 +3,22 @@ import SQLiteC
 
 extension Statement {
     /// The `Options` struct represents various options for preparing SQLite statements.
+    ///
+    /// ## Topics
+    ///
+    /// ### Initializers
+    ///
+    /// - ``init(rawValue:)``
+    ///
+    /// ### Instance Properties
+    ///
+    /// - ``rawValue``
+    ///
+    /// ### Type Properties
+    ///
+    /// - ``persistent``
+    /// - ``normalize``
+    /// - ``noVtab``
     public struct Options: OptionSet {
         /// The raw value representing the combination of options.
         public var rawValue: UInt32

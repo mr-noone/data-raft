@@ -1,53 +1,6 @@
 import Foundation
 import SQLiteC
 
-/// Binds a string value to the parameter at the specified index in the prepared SQL statement.
-///
-/// - Parameters:
-///   - stmt: The opaque pointer to the SQLite statement.
-///   - index: The index of the parameter.
-///   - string: The string value to bind.
-/// - Returns: A result code indicating success or failure.
-func sqlite3_bind_text(_ stmt: OpaquePointer!, _ index: Int32, _ string: String) -> Int32 {
-    sqlite3_bind_text(stmt, index, string, -1, SQLITE_TRANSIENT)
-}
-
-/// Binds a Data object to the parameter at the specified index in the prepared SQL statement.
-///
-/// - Parameters:
-///   - stmt: The opaque pointer to the SQLite statement.
-///   - index: The index of the parameter.
-///   - data: The Data object to bind.
-/// - Returns: A result code indicating success or failure.
-func sqlite3_bind_blob(_ stmt: OpaquePointer!, _ index: Int32, _ data: Data) -> Int32 {
-    data.withUnsafeBytes {
-        sqlite3_bind_blob(stmt, index, $0.baseAddress, Int32($0.count), SQLITE_TRANSIENT)
-    }
-}
-
-/// Retrieves the text value from the specified column in the current row of the SQLite result set.
-///
-/// - Parameters:
-///   - stmt: The opaque pointer to the SQLite statement.
-///   - iCol: The index of the column.
-/// - Returns: The text value from the column, or an empty string if the value is NULL.
-func sqlite3_column_text(_ stmt: OpaquePointer!, _ iCol: Int32) -> String {
-    String(cString: SQLiteC.sqlite3_column_text(stmt, iCol))
-}
-
-/// Retrieves the data from the specified column in the current row of the SQLite result set.
-///
-/// - Parameters:
-///   - stmt: The opaque pointer to the SQLite statement.
-///   - iCol: The index of the column.
-/// - Returns: The data from the column, or an empty Data object if the value is NULL.
-func sqlite3_column_blob(_ stmt: OpaquePointer!, _ iCol: Int32) -> Data {
-    Data(
-        bytes: sqlite3_column_blob(stmt, iCol),
-        count: Int(sqlite3_column_bytes(stmt, iCol))
-    )
-}
-
 /// The `Statement` class represents a prepared SQL statement in SQLite.
 ///
 /// ## Topics
@@ -122,7 +75,7 @@ public final class Statement: Equatable, Hashable {
         sqlite3_finalize(statement)
     }
     
-    // MARK: - Methods
+    // MARK: - Binding Parameters
     
     /// Returns the number of parameters in the prepared SQL statement.
     ///
@@ -254,6 +207,8 @@ public final class Statement: Equatable, Hashable {
         }
     }
     
+    // MARK: - Getting Results
+    
     /// Returns the number of columns in the result set of the prepared SQL statement.
     ///
     /// - Returns: The number of columns.
@@ -317,6 +272,8 @@ public final class Statement: Equatable, Hashable {
         return row
     }
     
+    // MARK: - Evaluating
+    
     /// Executes the next step of the prepared SQL statement.
     ///
     /// - Returns: A boolean indicating whether there are more rows to process
@@ -360,4 +317,53 @@ public final class Statement: Equatable, Hashable {
         hasher.combine(statement)
         hasher.combine(connection)
     }
+}
+
+// MARK: - Functions
+
+/// Binds a string value to the parameter at the specified index in the prepared SQL statement.
+///
+/// - Parameters:
+///   - stmt: The opaque pointer to the SQLite statement.
+///   - index: The index of the parameter.
+///   - string: The string value to bind.
+/// - Returns: A result code indicating success or failure.
+private func sqlite3_bind_text(_ stmt: OpaquePointer!, _ index: Int32, _ string: String) -> Int32 {
+    sqlite3_bind_text(stmt, index, string, -1, SQLITE_TRANSIENT)
+}
+
+/// Binds a Data object to the parameter at the specified index in the prepared SQL statement.
+///
+/// - Parameters:
+///   - stmt: The opaque pointer to the SQLite statement.
+///   - index: The index of the parameter.
+///   - data: The Data object to bind.
+/// - Returns: A result code indicating success or failure.
+private func sqlite3_bind_blob(_ stmt: OpaquePointer!, _ index: Int32, _ data: Data) -> Int32 {
+    data.withUnsafeBytes {
+        sqlite3_bind_blob(stmt, index, $0.baseAddress, Int32($0.count), SQLITE_TRANSIENT)
+    }
+}
+
+/// Retrieves the text value from the specified column in the current row of the SQLite result set.
+///
+/// - Parameters:
+///   - stmt: The opaque pointer to the SQLite statement.
+///   - iCol: The index of the column.
+/// - Returns: The text value from the column, or an empty string if the value is NULL.
+private func sqlite3_column_text(_ stmt: OpaquePointer!, _ iCol: Int32) -> String {
+    String(cString: SQLiteC.sqlite3_column_text(stmt, iCol))
+}
+
+/// Retrieves the data from the specified column in the current row of the SQLite result set.
+///
+/// - Parameters:
+///   - stmt: The opaque pointer to the SQLite statement.
+///   - iCol: The index of the column.
+/// - Returns: The data from the column, or an empty Data object if the value is NULL.
+private func sqlite3_column_blob(_ stmt: OpaquePointer!, _ iCol: Int32) -> Data {
+    Data(
+        bytes: sqlite3_column_blob(stmt, iCol),
+        count: Int(sqlite3_column_bytes(stmt, iCol))
+    )
 }
